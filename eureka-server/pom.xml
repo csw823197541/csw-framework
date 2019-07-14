@@ -8,7 +8,7 @@
     <packaging>jar</packaging>
 
     <parent>
-        <groupId>com.csw</groupId>
+        <groupId>com.three</groupId>
         <artifactId>csw-framework</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
