@@ -1,9 +1,6 @@
-server:
-  port: 3333
-
 spring:
   application:
-    name: user-service
+    name: zuul-server
   cloud:
     config:
       discovery:
@@ -11,7 +8,8 @@ spring:
         serviceId: config-server
       profile: dev
       fail-fast: true
-
+server:
+  port: 8084
 eureka:
   client:
     serviceUrl:
@@ -22,7 +20,6 @@ eureka:
     lease-renewal-interval-in-seconds: 5
     prefer-ip-address: true
     instance-id: ${spring.application.name}:${server.port}
-
 management:
   endpoints:
     web:

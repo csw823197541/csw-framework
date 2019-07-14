@@ -1,4 +1,4 @@
-package com.three.commonclient.auth;
+package com.three.common.enums;
 
 /**
  * 自己系统的client信息

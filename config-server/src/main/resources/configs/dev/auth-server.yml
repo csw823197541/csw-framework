@@ -38,20 +38,20 @@ spring:
       maxPoolPreparedStatementPerConnectionSize: 20 # 开启poolPreparedStatements后生效
       filters: stat,wall # 配置扩展插件，常用的插件有=>stat:监控统计 wall:防御sql注入
       connectionProperties: 'druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000' # 通过connectProperties属性来打开mergeSql功能;慢SQL记录
-#  rabbitmq:
-#    host: local.rabbitmq.com
-#    port: 5672
-#    username: cloud-dev
-#    password: cloud-dev
-#    virtual-host: /
-#  mvc:
-#    servlet:
-#      load-on-startup: 1
-#  zipkin:
-#    base-url: http://localhost:9411
-#    enabled: true
-#    sender:
-#      type: web
+  #  rabbitmq:
+  #    host: local.rabbitmq.com
+  #    port: 5672
+  #    username: cloud-dev
+  #    password: cloud-dev
+  #    virtual-host: /
+  mvc:
+    servlet:
+      load-on-startup: 1
+  zipkin:
+    base-url: http://localhost:9411
+    enabled: true
+    sender:
+      type: web
 access_token:
   store-jwt: false
   jwt-signing-key: xiao@wei@jia@gou=$==+_+%0%:)(:)
@@ -61,16 +61,16 @@ logging:
     root: info
     com.three: debug
   file: logs/${spring.application.name}.log
-#ribbon:
-#  eager-load:
-#    enabled: true
-#    clients: user-center
-#  ReadTimeout: 10000
-#  ConnectTimeout: 10000
-#hystrix:
-#  command:
-#    default:
-#      execution:
-#        isolation:
-#          thread:
-#            timeoutInMilliseconds: 60000
+ribbon:
+  eager-load:
+    enabled: true
+    clients: user-service
+  ReadTimeout: 10000
+  ConnectTimeout: 10000
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000

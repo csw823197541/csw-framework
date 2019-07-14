@@ -10,30 +10,30 @@ spring:
 logging:
   level:
     root: info
-    com.cloud: debug
+    com.three: debug
   file: logs/${spring.application.name}.log
 zuul:
   ignored-services: '*'
   sensitiveHeaders: 
   routes:
-    oauth:
-      path: /api-o/**
-      serviceId: oauth-center
-    api-u:
-      path: /api-u/**
-      serviceId: user-center
-    backend:
-      path: /api-b/**
-      serviceId: manage-backend
-    log:
-      path: /api-l/**
-      serviceId: log-center
-    file:
-      path: /api-f/**
-      serviceId: file-center
-    sms:
-      path: /api-n/**
-      serviceId: notification-center
+    auth-server:
+      path: /three-auth-server/**
+      serviceId: auth-server
+    user-service:
+      path: /three-user-service/**
+      serviceId: user-service
+#    backend:
+#      path: /api-b/**
+#      serviceId: manage-backend
+#    log:
+#      path: /api-l/**
+#      serviceId: log-center
+#    file:
+#      path: /api-f/**
+#      serviceId: file-center
+#    sms:
+#      path: /api-n/**
+#      serviceId: notification-center
   host:
     connect-timeout-millis: 10000
     socket-timeout-millis: 60000

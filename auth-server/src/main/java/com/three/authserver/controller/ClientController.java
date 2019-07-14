@@ -1,7 +1,7 @@
 package com.three.authserver.controller;
 
 import com.three.authserver.service.RedisClientDetailsService;
-import com.three.commonclient.auth.SystemClientInfo;
+import com.three.common.enums.SystemClientInfo;
 import com.three.commonclient.base.vo.PageResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
