@@ -1,7 +1,7 @@
 package com.three.authserver.service;
 
 import com.three.commonclient.exception.BusinessException;
-import com.three.authserver.auth.SysUser;
+import com.three.authserver.sys.SysUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.DisabledException;
@@ -33,7 +33,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 //    private SmsClient smsClient;
 
     @Autowired
-    private LoginUserService loginUserService;
+    private SysUserService sysUserService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -42,7 +42,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
         username = params[0];// 真正的用户名
 
 //        SysUser loginAppUser = userClient.findByUsername(username);
-        SysUser sysUser = loginUserService.findByUsername(username);
+        SysUser sysUser = sysUserService.findByUsername(username);
         if (sysUser == null) {
             throw new BusinessException("用户不存在");
         } else if (!sysUser.isEnabled()) {

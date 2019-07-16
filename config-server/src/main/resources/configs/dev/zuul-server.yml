@@ -28,6 +28,9 @@ zuul:
     three-user-service:
       path: /three-user-service/**
       serviceId: user-service
+    three-order-service:
+      path: /three-order-service/**
+      serviceId: order-service
   host:
     connect-timeout-millis: 10000
     socket-timeout-millis: 60000

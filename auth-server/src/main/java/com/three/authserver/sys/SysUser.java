@@ -1,4 +1,4 @@
-package com.three.authserver.auth;
+package com.three.authserver.sys;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.three.common.enums.StatusEnum;

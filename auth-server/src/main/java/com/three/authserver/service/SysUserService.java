@@ -8,9 +8,9 @@ import com.three.authserver.user.repository.UserRepository;
 import com.three.common.enums.StatusEnum;
 import com.three.commonclient.exception.BusinessException;
 import com.three.common.utils.BeanCopyUtil;
-import com.three.authserver.auth.SysAuthority;
-import com.three.authserver.auth.SysUser;
-import com.three.authserver.auth.SysRole;
+import com.three.authserver.sys.SysAuthority;
+import com.three.authserver.sys.SysUser;
+import com.three.authserver.sys.SysRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +24,7 @@ import java.util.Set;
  * Description:
  */
 @Service
-public class LoginUserService {
+public class SysUserService {
 
     @Autowired
     private UserRepository userRepository;

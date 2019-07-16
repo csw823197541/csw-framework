@@ -4,7 +4,7 @@ import com.three.authserver.myextends.MyRedisTokenStore;
 import com.three.authserver.service.RandomAuthenticationKeyGenerator;
 import com.three.authserver.service.RedisAuthorizationCodeServices;
 import com.three.authserver.service.RedisClientDetailsService;
-import com.three.authserver.auth.SysUser;
+import com.three.authserver.sys.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

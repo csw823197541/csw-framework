@@ -1,8 +1,8 @@
 package com.three.authserver.myextends;
 
-import com.three.authserver.service.LoginUserService;
+import com.three.authserver.service.SysUserService;
 import com.three.common.enums.AuthorityEnum;
-import com.three.authserver.auth.SysAuthority;
+import com.three.authserver.sys.SysAuthority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
@@ -21,7 +21,7 @@ import java.util.*;
 public class MyFilterInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 
     @Autowired
-    private LoginUserService loginUserService;
+    private SysUserService sysUserService;
 
     private Map<String, Collection<ConfigAttribute>> map = null;
 
@@ -32,7 +32,7 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
         map = new HashMap<>();
         Collection<ConfigAttribute> array;
         ConfigAttribute cfg;
-        List<SysAuthority> sysAuthorityList = loginUserService.findAllSysAuthorities();
+        List<SysAuthority> sysAuthorityList = sysUserService.findAllSysAuthorities();
         for (SysAuthority sysAuthority : sysAuthorityList) {
             if (AuthorityEnum.BUTTON.getCode() == sysAuthority.getAuthorityType()) {
                 array = new ArrayList<>();
