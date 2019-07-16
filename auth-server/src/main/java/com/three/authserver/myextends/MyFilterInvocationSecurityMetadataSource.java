@@ -44,7 +44,6 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
                 map.put(sysAuthority.getAuthorityUrl(), array);
             }
         }
-
     }
 
 

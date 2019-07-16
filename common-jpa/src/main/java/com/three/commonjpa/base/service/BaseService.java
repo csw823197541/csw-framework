@@ -1,11 +1,11 @@
-package com.three.commonclient.base.service;
+package com.three.commonjpa.base.service;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.three.common.utils.StringUtil;
-import com.three.commonclient.base.repository.BaseRepository;
-import com.three.commonclient.base.vo.PageQuery;
-import com.three.commonclient.base.vo.PageResult;
+import com.three.common.vo.PageQuery;
+import com.three.common.vo.PageResult;
+import com.three.commonjpa.base.repository.BaseRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

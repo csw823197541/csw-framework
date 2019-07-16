@@ -7,8 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.oauth2.common.OAuth2AccessToken;
-import org.springframework.security.oauth2.common.util.OAuth2Utils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -26,6 +24,11 @@ import java.util.concurrent.CompletableFuture;
 @RestController
 public class SysTokenController {
 
+    public static final String GRANT_TYPE = "grant_type";
+    public static final String CLIENT_ID = "client_id";
+    public static final String SCOPE = "scope";
+    public static String BEARER_TYPE = "Bearer";
+
     @Autowired
     private Oauth2Client oauth2Client;
 
@@ -41,10 +44,10 @@ public class SysTokenController {
     @PostMapping("/sys/login")
     public Map<String, Object> login(String username, String password) {
         Map<String, String> parameters = new HashMap<>();
-        parameters.put(OAuth2Utils.GRANT_TYPE, "password");
-        parameters.put(OAuth2Utils.CLIENT_ID, SystemClientInfo.CLIENT_ID);
+        parameters.put(GRANT_TYPE, "password");
+        parameters.put(CLIENT_ID, SystemClientInfo.CLIENT_ID);
         parameters.put("client_secret", SystemClientInfo.CLIENT_SECRET);
-        parameters.put(OAuth2Utils.SCOPE, SystemClientInfo.CLIENT_SCOPE);
+        parameters.put(SCOPE, SystemClientInfo.CLIENT_SCOPE);
 		parameters.put("username", username);
 //        // 为了支持多类型登录，这里在username后拼装上登录类型
 //        parameters.put("username", username + "|" + CredentialType.USERNAME.name());
@@ -138,10 +141,10 @@ public class SysTokenController {
     @PostMapping("/sys/refresh_token")
     public Map<String, Object> refresh_token(String refresh_token) {
         Map<String, String> parameters = new HashMap<>();
-        parameters.put(OAuth2Utils.GRANT_TYPE, "refresh_token");
-        parameters.put(OAuth2Utils.CLIENT_ID, SystemClientInfo.CLIENT_ID);
+        parameters.put(GRANT_TYPE, "refresh_token");
+        parameters.put(CLIENT_ID, SystemClientInfo.CLIENT_ID);
         parameters.put("client_secret", SystemClientInfo.CLIENT_SECRET);
-        parameters.put(OAuth2Utils.SCOPE, SystemClientInfo.CLIENT_SCOPE);
+        parameters.put(SCOPE, SystemClientInfo.CLIENT_SCOPE);
         parameters.put("refresh_token", refresh_token);
 
         return oauth2Client.postAccessToken(parameters);
@@ -156,7 +159,7 @@ public class SysTokenController {
     public void logout(String access_token, @RequestHeader(required = false, value = "Authorization") String token) {
         if (StringUtils.isBlank(access_token)) {
             if (StringUtils.isNoneBlank(token)) {
-                access_token = token.substring(OAuth2AccessToken.BEARER_TYPE.length() + 1);
+                access_token = token.substring(BEARER_TYPE.length() + 1);
             }
         }
         oauth2Client.removeToken(access_token);

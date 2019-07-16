@@ -1,4 +1,4 @@
-package com.three.commonclient.base.vo;
+package com.three.common.vo;
 
 import java.util.List;
 

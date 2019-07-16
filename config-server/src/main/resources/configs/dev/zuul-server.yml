@@ -11,29 +11,23 @@ logging:
   level:
     root: info
     com.three: debug
+    org.springframework.security: debug
   file: logs/${spring.application.name}.log
+security:
+  oauth2:
+    resource:
+      user-info-uri: http://localhost:8084/three-auth-server/user-me
+      prefer-token-info: false
 zuul:
   ignored-services: '*'
-  sensitiveHeaders: 
+  sensitiveHeaders:
   routes:
-    auth-server:
+    three-auth-server:
       path: /three-auth-server/**
       serviceId: auth-server
-    user-service:
+    three-user-service:
       path: /three-user-service/**
       serviceId: user-service
-#    backend:
-#      path: /api-b/**
-#      serviceId: manage-backend
-#    log:
-#      path: /api-l/**
-#      serviceId: log-center
-#    file:
-#      path: /api-f/**
-#      serviceId: file-center
-#    sms:
-#      path: /api-n/**
-#      serviceId: notification-center
   host:
     connect-timeout-millis: 10000
     socket-timeout-millis: 60000

@@ -16,6 +16,7 @@
         <module>auth-server</module>
         <module>common</module>
         <module>common-client</module>
+        <module>common-jpa</module>
         <module>user</module>
         <module>order</module>
     </modules>

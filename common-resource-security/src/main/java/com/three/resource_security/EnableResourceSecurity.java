@@ -1,9 +1,7 @@
-package com.three.commonclient;
+package com.three.resource_security;
 
-import com.three.commonclient.config.ComponentScanConfig;
+import com.three.resource_security.config.ComponentScanConfig;
 import org.springframework.boot.web.servlet.ServletComponentScan;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
@@ -16,8 +14,6 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @ServletComponentScan
-@EnableEurekaClient
-@EnableFeignClients
 @Import({ComponentScanConfig.class})
-public @interface EnableCommonClient {
+public @interface EnableResourceSecurity {
 }

@@ -1,11 +1,12 @@
-package com.three.authserver.myextends;
+package com.three.resource_security.myextends;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.SecurityMetadataSource;
 import org.springframework.security.access.intercept.AbstractSecurityInterceptor;
 import org.springframework.security.access.intercept.InterceptorStatusToken;
 import org.springframework.security.web.FilterInvocation;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
 import java.io.IOException;
@@ -14,7 +15,8 @@ import java.io.IOException;
  * Created by csw on 2018/11/18.
  * Description:
  */
-@Service
+@Configuration
+@Component
 public class MyFilterSecurityInterceptor extends AbstractSecurityInterceptor implements Filter {
 
     @Autowired

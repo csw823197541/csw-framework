@@ -1,6 +1,5 @@
 package com.three.order.service;
 
-import com.three.order.gateway.UserGateway;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +14,7 @@ public class OrderService {
 
     private Logger logger = LoggerFactory.getLogger(OrderService.class);
 
-    @Autowired
-    UserGateway userGateway;
-
     public void placeOrder(String name) {
-        String userInfo = userGateway.findUserInfo(name);
-        logger.info(String.format("查找到用户信息：%s", userInfo));
+        logger.info(String.format("查找到用户信息：%s", null));
     }
 }

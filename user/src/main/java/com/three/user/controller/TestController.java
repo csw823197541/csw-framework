@@ -1,5 +1,6 @@
 package com.three.user.controller;
 
+import com.three.common.vo.JsonResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,14 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
     @GetMapping("/sys/users/test")
-    public String test() {
-        int n = 3/0;
-        return "hello world! /sys/users/test";
+    public JsonResult test() {
+//        int a = 1/0;
+        return JsonResult.ok("hello world! /sys/users/test");
     }
 
     @GetMapping("/users-anon/test")
     public String test1() {
-        int n = 3/0;
         return "hello world! /users-anon/test";
     }
 }

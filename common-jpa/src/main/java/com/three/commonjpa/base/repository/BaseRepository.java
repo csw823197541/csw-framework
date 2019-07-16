@@ -1,4 +1,4 @@
-package com.three.commonclient.base.repository;
+package com.three.commonjpa.base.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

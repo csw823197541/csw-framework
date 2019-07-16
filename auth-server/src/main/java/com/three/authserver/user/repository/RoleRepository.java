@@ -1,7 +1,7 @@
 package com.three.authserver.user.repository;
 
 import com.three.authserver.user.entity.Role;
-import com.three.commonclient.base.repository.BaseRepository;
+import com.three.commonjpa.base.repository.BaseRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 /**
