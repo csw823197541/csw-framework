@@ -29,10 +29,6 @@ public class MyAccessDecisionManager implements AccessDecisionManager {
         if (null == configAttributes || configAttributes.size() <= 0) {
             return;
         }
-//        SysUser user = (SysUser) authentication.getPrincipal();
-//        if (AdminEnum.YES.getCode() == user.getIsAdmin()) { // 用户是超级管理员
-//            return;
-//        }
         for (ConfigAttribute configAttribute : configAttributes) {
             String needRole = configAttribute.getAttribute();
             for (GrantedAuthority ga : authentication.getAuthorities()) {// authentication 为在注释1 中循环添加到 GrantedAuthority 对象中的权限信息集合

@@ -1,4 +1,4 @@
-package com.three.commonclient.auth;
+package com.three.authserver.auth;
 
 import lombok.Data;
 

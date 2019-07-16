@@ -1,7 +1,7 @@
 package com.three.authserver.service;
 
 import com.three.commonclient.exception.BusinessException;
-import com.three.commonclient.auth.SysUser;
+import com.three.authserver.auth.SysUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.DisabledException;

@@ -8,9 +8,9 @@ import com.three.authserver.user.repository.UserRepository;
 import com.three.common.enums.StatusEnum;
 import com.three.commonclient.exception.BusinessException;
 import com.three.common.utils.BeanCopyUtil;
-import com.three.commonclient.auth.SysAuthority;
-import com.three.commonclient.auth.SysUser;
-import com.three.commonclient.auth.SysRole;
+import com.three.authserver.auth.SysAuthority;
+import com.three.authserver.auth.SysUser;
+import com.three.authserver.auth.SysRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

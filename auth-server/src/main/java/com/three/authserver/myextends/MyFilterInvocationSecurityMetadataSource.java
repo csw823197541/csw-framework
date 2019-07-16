@@ -2,7 +2,7 @@ package com.three.authserver.myextends;
 
 import com.three.authserver.service.LoginUserService;
 import com.three.common.enums.AuthorityEnum;
-import com.three.commonclient.auth.SysAuthority;
+import com.three.authserver.auth.SysAuthority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
