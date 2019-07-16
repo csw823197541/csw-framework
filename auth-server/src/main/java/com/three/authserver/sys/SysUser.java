@@ -42,7 +42,7 @@ public class SysUser implements UserDetails {
 
     private Set<SysRole> sysRoles;
 
-    private Set<String> sysAuthorities;
+    private Set<SysAuthority> sysAuthorities;
 
     @JsonIgnore
     @Override
@@ -59,8 +59,8 @@ public class SysUser implements UserDetails {
 //        }
 
         if (!CollectionUtils.isEmpty(sysAuthorities)) {
-            sysAuthorities.forEach(authority -> {
-                collection.add(new SimpleGrantedAuthority(authority));
+            sysAuthorities.forEach(sysAuthority -> {
+                collection.add(new SimpleGrantedAuthority(sysAuthority.getAuthorityUrl()));
             });
         }
 

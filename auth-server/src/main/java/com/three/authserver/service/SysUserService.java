@@ -41,13 +41,15 @@ public class SysUserService {
         sysUser = (SysUser) BeanCopyUtil.copyBean(user, sysUser);
 
         Set<SysRole> sysRoleSet = new HashSet<>();
-        Set<String> authoritySet = new HashSet<>();
+        Set<SysAuthority> authoritySet = new HashSet<>();
         for (Role role : user.getRoles()) {
             SysRole sysRole = new SysRole();
             sysRole = (SysRole) BeanCopyUtil.copyBean(role, sysRole);
             sysRoleSet.add(sysRole);
             for (Authority authority : role.getAuthorities()) {
-                authoritySet.add(authority.getAuthorityUrl());
+                SysAuthority sysAuthority = new SysAuthority();
+                sysAuthority = (SysAuthority) BeanCopyUtil.copyBean(authority, sysAuthority);
+                authoritySet.add(sysAuthority);
             }
         }
         sysUser.setSysRoles(sysRoleSet);

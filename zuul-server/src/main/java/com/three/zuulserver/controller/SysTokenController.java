@@ -2,6 +2,7 @@ package com.three.zuulserver.controller;
 
 import com.three.common.enums.CredentialType;
 import com.three.common.enums.SystemClientInfo;
+import com.three.common.vo.JsonResult;
 import com.three.zuulserver.feign.Oauth2Client;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -156,12 +157,13 @@ public class SysTokenController {
      * @param access_token
      */
     @GetMapping("/sys/logout")
-    public void logout(String access_token, @RequestHeader(required = false, value = "Authorization") String token) {
+    public JsonResult logout(String access_token, @RequestHeader(required = false, value = "Authorization") String token) {
         if (StringUtils.isBlank(access_token)) {
             if (StringUtils.isNoneBlank(token)) {
                 access_token = token.substring(BEARER_TYPE.length() + 1);
             }
         }
         oauth2Client.removeToken(access_token);
+        return JsonResult.ok("成功退出登录");
     }
 }

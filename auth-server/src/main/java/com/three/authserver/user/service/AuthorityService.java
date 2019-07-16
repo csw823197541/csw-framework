@@ -35,7 +35,7 @@ public class AuthorityService extends BaseService<Authority> {
 
         Authority authority = new Authority();
         authority = (Authority) BeanCopyUtil.copyBean(authorityParam, authority);
-//        authority.setCreateBy(LoginUser.getLoginUser());
+//        authority.setCreateBy(LoginSysUserUtil.getLoginUser());
 
         authorityRepository.save(authority);
     }

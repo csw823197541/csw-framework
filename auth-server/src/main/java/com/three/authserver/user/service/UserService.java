@@ -1,11 +1,15 @@
 package com.three.authserver.user.service;
 
+import com.three.authserver.sys.LoginSysUserUtil;
+import com.three.authserver.sys.SysAuthority;
+import com.three.authserver.sys.SysUser;
 import com.three.authserver.user.entity.Role;
 import com.three.authserver.user.entity.User;
 import com.three.authserver.user.param.UserParam;
 import com.three.authserver.user.repository.RoleRepository;
 import com.three.authserver.user.repository.UserRepository;
 import com.three.authserver.user.vo.MenuVo;
+import com.three.common.enums.AuthorityEnum;
 import com.three.commonjpa.base.service.BaseService;
 import com.three.common.vo.PageQuery;
 import com.three.common.vo.PageResult;
@@ -132,34 +136,35 @@ public class UserService extends BaseService<User> {
 
     public List<MenuVo> getMenuInfo() {
         List<MenuVo> menuVoList = new ArrayList<>();
+        SysUser sysUser = LoginSysUserUtil.getLoginUser();
 //        User user = LoginUser.getLoginUser();
-//        Map<Long, MenuVo> menuVoMap = new HashMap<>();
-//        for (Authority authority : user.getAuthoritySet()) {
-//            if (AuthorityEnum.MENU.getCode() == authority.getAuthorityType()) {
-//                MenuVo menuVo = new MenuVo();
-//                menuVo.setId(authority.getId());
-//                menuVo.setParentId(authority.getParentId());
-//                menuVo.setName(authority.getAuthorityName());
-//                menuVo.setIcon(authority.getAuthorityIcon());
-//                menuVo.setUrl(authority.getAuthorityUrl());
-//                menuVo.setSort(authority.getSort());
-//                menuVoMap.put(menuVo.getId(), menuVo);
-//                if (menuVo.getParentId() == -1) {
-//                    menuVo.setUrl("javascript:;");
-//                    menuVoList.add(menuVo);
-//                }
-//            }
-//        }
-//        for (Map.Entry<Long, MenuVo> entry : menuVoMap.entrySet()) {
-//            if (entry.getValue().getParentId() > 0) {
-//                MenuVo menuVo = menuVoMap.get(entry.getValue().getParentId());
-//                menuVo.getSubMenus().add(entry.getValue());
-//            }
-//        }
-//        menuVoList.sort(Comparator.comparing(MenuVo::getSort));
-//        for (MenuVo menuVo : menuVoList) {
-//            menuVo.getSubMenus().sort(Comparator.comparing(MenuVo::getSort));
-//        }
+        Map<Long, MenuVo> menuVoMap = new HashMap<>();
+        for (SysAuthority authority : sysUser.getSysAuthorities()) {
+            if (AuthorityEnum.MENU.getCode() == authority.getAuthorityType()) {
+                MenuVo menuVo = new MenuVo();
+                menuVo.setId(authority.getId());
+                menuVo.setParentId(authority.getParentId());
+                menuVo.setName(authority.getAuthorityName());
+                menuVo.setIcon(authority.getAuthorityIcon());
+                menuVo.setUrl(authority.getAuthorityUrl());
+                menuVo.setSort(authority.getSort());
+                menuVoMap.put(menuVo.getId(), menuVo);
+                if (menuVo.getParentId() == -1) {
+                    menuVo.setUrl("javascript:;");
+                    menuVoList.add(menuVo);
+                }
+            }
+        }
+        for (Map.Entry<Long, MenuVo> entry : menuVoMap.entrySet()) {
+            if (entry.getValue().getParentId() > 0) {
+                MenuVo menuVo = menuVoMap.get(entry.getValue().getParentId());
+                menuVo.getSubMenus().add(entry.getValue());
+            }
+        }
+        menuVoList.sort(Comparator.comparing(MenuVo::getSort));
+        for (MenuVo menuVo : menuVoList) {
+            menuVo.getSubMenus().sort(Comparator.comparing(MenuVo::getSort));
+        }
         return menuVoList;
     }
 }
