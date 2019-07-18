@@ -1,5 +1,6 @@
 package com.three.zuulserver.feign;
 
+import com.three.common.contants.ServiceInfo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -7,15 +8,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
 
-@FeignClient("auth-server")
+@FeignClient(ServiceInfo.AUTH_SERVER)
 public interface Oauth2Client {
 
     /**
      * 获取access_token<br>
      * 这是spring-security-oauth2底层的接口，类TokenEndpoint<br>
+     *
      * @param parameters
      * @return
-     * @see org.springframework.security.oauth2.provider.endpoint.TokenEndpoint
+     * @see //org.springframework.security.oauth2.provider.endpoint.TokenEndpoint
      */
     @PostMapping(path = "/oauth/token")
     Map<String, Object> postAccessToken(@RequestParam Map<String, String> parameters);

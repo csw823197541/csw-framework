@@ -1,7 +1,7 @@
 package com.three.authserver.myextends;
 
 import com.three.common.enums.AdminEnum;
-import com.three.authserver.sys.SysUser;
+import com.three.authserver.service.SysUser;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;

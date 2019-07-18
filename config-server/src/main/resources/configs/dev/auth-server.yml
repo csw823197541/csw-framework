@@ -62,12 +62,12 @@ logging:
     com.three: debug
     org.springframework.security: debug
   file: logs/${spring.application.name}.log
-#ribbon:
-#  eager-load:
-#    enabled: true
-#    clients: user-service
-#  ReadTimeout: 10000
-#  ConnectTimeout: 10000
+ribbon:
+  eager-load:
+    enabled: true
+    clients: user-service
+  ReadTimeout: 10000
+  ConnectTimeout: 10000
 hystrix:
   command:
     default:

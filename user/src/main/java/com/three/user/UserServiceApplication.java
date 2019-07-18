@@ -8,8 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @EnableCommonClient
-@EnableResourceSecurity
 @EnableCommonJpa
+@EnableResourceSecurity
 public class UserServiceApplication {
 
     public static void main(String[] args) {

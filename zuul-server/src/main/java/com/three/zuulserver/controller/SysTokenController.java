@@ -1,22 +1,21 @@
 package com.three.zuulserver.controller;
 
-import com.three.common.enums.CredentialType;
-import com.three.common.enums.SystemClientInfo;
+import com.three.common.auth.LoginUser;
+import com.three.common.contants.SystemClientInfo;
 import com.three.common.vo.JsonResult;
 import com.three.zuulserver.feign.Oauth2Client;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * 登陆、刷新token、退出
@@ -141,6 +140,7 @@ public class SysTokenController {
      */
     @PostMapping("/sys/refresh_token")
     public Map<String, Object> refresh_token(String refresh_token) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Map<String, String> parameters = new HashMap<>();
         parameters.put(GRANT_TYPE, "refresh_token");
         parameters.put(CLIENT_ID, SystemClientInfo.CLIENT_ID);
@@ -158,6 +158,7 @@ public class SysTokenController {
      */
     @GetMapping("/sys/logout")
     public JsonResult logout(String access_token, @RequestHeader(required = false, value = "Authorization") String token) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (StringUtils.isBlank(access_token)) {
             if (StringUtils.isNoneBlank(token)) {
                 access_token = token.substring(BEARER_TYPE.length() + 1);

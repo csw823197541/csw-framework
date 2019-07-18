@@ -1,8 +1,8 @@
 package com.three.authserver.myextends;
 
 import com.three.authserver.service.SysUserService;
+import com.three.common.auth.SysAuthority;
 import com.three.common.enums.AuthorityEnum;
-import com.three.authserver.sys.SysAuthority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
@@ -54,14 +54,17 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
         }
         // object 中包含用户请求的request 信息
         HttpServletRequest request = ((FilterInvocation) object).getHttpRequest();
-        String resUrl;
-        for (String s : map.keySet()) {
-            resUrl = s;
-            String re = request.getMethod().toLowerCase() + ":" + request.getRequestURI();
+        String re = request.getMethod().toLowerCase() + ":" + request.getRequestURI();
+        for (String resUrl : map.keySet()) {
             if (resUrl.matches(re)) {
                 return map.get(resUrl);
             }
         }
+//        // 说明数据库权限表中没有该权限信息
+//        List<ConfigAttribute> configAttributeList = new ArrayList<>();
+//        ConfigAttribute configAttribute = new SecurityConfig(request.getMethod().toLowerCase() + ":" + request.getRequestURI());
+//        configAttributeList.add(configAttribute);
+//        return configAttributeList;
         return null;
     }
 

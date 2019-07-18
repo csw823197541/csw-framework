@@ -1,7 +1,7 @@
 package com.three.authserver.controller;
 
 import com.three.authserver.service.RedisClientDetailsService;
-import com.three.common.enums.SystemClientInfo;
+import com.three.common.contants.SystemClientInfo;
 import com.three.common.vo.PageResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +66,7 @@ public class ClientController {
         log.info("修改client密码：{},{}", clientId, secret);
     }
 
-    @PreAuthorize("hasAuthority('client:query')")
+//    @PreAuthorize("hasAuthority('client:query')")
     @GetMapping
     public PageResult<ClientDetails> findClients() {
         List<ClientDetails> clientDetails = clientDetailsService.listClientDetails();
