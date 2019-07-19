@@ -1,6 +1,5 @@
 package com.three.resource_security.config;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.three.common.contants.PermitAllUrl;
 import com.three.resource_security.myextends.MyFilterSecurityInterceptor;
@@ -22,7 +21,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,10 +37,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.exceptionHandling()
-                .authenticationEntryPoint(
-                        (request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED))
-                .and().authorizeRequests()
+        http.authorizeRequests()
                 .antMatchers(PermitAllUrl.permitAllUrl("/internal/**")).permitAll() // 放开权限的url
                 .anyRequest().authenticated();
         http.httpBasic().disable().csrf().disable().cors().disable();
@@ -69,7 +64,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             Map<String, Object> map = new HashMap<>();
             map.put("code", HttpServletResponse.SC_FORBIDDEN);
-            map.put("msg", "AccessDeniedException：" + e.getMessage());
+            map.put("msg", "权限异常：" + e.getMessage());
             response.getWriter().write(objectMapper.writeValueAsString(map));
         }
     }
@@ -83,7 +78,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             Map<String, Object> map = new HashMap<>();
             map.put("code", HttpServletResponse.SC_UNAUTHORIZED);
-            map.put("msg", "AuthenticationException：" + e.getMessage());
+            map.put("msg", "认证异常：" + e.getMessage());
             response.getWriter().write(objectMapper.writeValueAsString(map));
         }
     }

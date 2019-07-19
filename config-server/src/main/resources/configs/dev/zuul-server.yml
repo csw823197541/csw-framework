@@ -32,8 +32,8 @@ zuul:
       path: /three-order-service/**
       serviceId: order-service
   host:
-    connect-timeout-millis: 60000
-    socket-timeout-millis: 60000
+    connect-timeout-millis: 600000
+    socket-timeout-millis: 600000
   add-proxy-headers: true
   ribbon:
     eager-load:

@@ -4,6 +4,7 @@ import com.three.common.auth.SysAuthority;
 import com.three.common.auth.LoginUser;
 import com.three.commonclient.exception.BusinessException;
 //import com.three.resource_security.utils.LoginUserUtil;
+import com.three.resource_security.utils.LoginUserUtil;
 import com.three.user.entity.Role;
 import com.three.user.entity.User;
 import com.three.user.param.UserParam;
@@ -137,34 +138,36 @@ public class UserService extends BaseService<User> {
 
     public List<MenuVo> getMenuInfo() {
         List<MenuVo> menuVoList = new ArrayList<>();
-//        LoginUser loginUser = LoginUserUtil.getLoginUser();
-//        Map<Long, MenuVo> menuVoMap = new HashMap<>();
-//        for (SysAuthority authority : loginUser.getSysAuthorities()) {
-//            if (AuthorityEnum.MENU.getCode() == authority.getAuthorityType()) {
-//                MenuVo menuVo = new MenuVo();
-//                menuVo.setId(authority.getId());
-//                menuVo.setParentId(authority.getParentId());
-//                menuVo.setName(authority.getAuthorityName());
-//                menuVo.setIcon(authority.getAuthorityIcon());
-//                menuVo.setUrl(authority.getAuthorityUrl());
-//                menuVo.setSort(authority.getSort());
-//                menuVoMap.put(menuVo.getId(), menuVo);
-//                if (menuVo.getParentId() == -1) {
-//                    menuVo.setUrl("javascript:;");
-//                    menuVoList.add(menuVo);
-//                }
-//            }
-//        }
-//        for (Map.Entry<Long, MenuVo> entry : menuVoMap.entrySet()) {
-//            if (entry.getValue().getParentId() > 0) {
-//                MenuVo menuVo = menuVoMap.get(entry.getValue().getParentId());
-//                menuVo.getSubMenus().add(entry.getValue());
-//            }
-//        }
-//        menuVoList.sort(Comparator.comparing(MenuVo::getSort));
-//        for (MenuVo menuVo : menuVoList) {
-//            menuVo.getSubMenus().sort(Comparator.comparing(MenuVo::getSort));
-//        }
+        LoginUser loginUser = LoginUserUtil.getLoginUser();
+        if (loginUser != null) {
+            Map<Long, MenuVo> menuVoMap = new HashMap<>();
+            for (SysAuthority authority : loginUser.getSysAuthorities()) {
+                if (AuthorityEnum.MENU.getCode() == authority.getAuthorityType()) {
+                    MenuVo menuVo = new MenuVo();
+                    menuVo.setId(authority.getId());
+                    menuVo.setParentId(authority.getParentId());
+                    menuVo.setName(authority.getAuthorityName());
+                    menuVo.setIcon(authority.getAuthorityIcon());
+                    menuVo.setUrl(authority.getAuthorityUrl());
+                    menuVo.setSort(authority.getSort());
+                    menuVoMap.put(menuVo.getId(), menuVo);
+                    if (menuVo.getParentId() == -1) {
+                        menuVo.setUrl("javascript:;");
+                        menuVoList.add(menuVo);
+                    }
+                }
+            }
+            for (Map.Entry<Long, MenuVo> entry : menuVoMap.entrySet()) {
+                if (entry.getValue().getParentId() > 0) {
+                    MenuVo menuVo = menuVoMap.get(entry.getValue().getParentId());
+                    menuVo.getSubMenus().add(entry.getValue());
+                }
+            }
+            menuVoList.sort(Comparator.comparing(MenuVo::getSort));
+            for (MenuVo menuVo : menuVoList) {
+                menuVo.getSubMenus().sort(Comparator.comparing(MenuVo::getSort));
+            }
+        }
         return menuVoList;
     }
 

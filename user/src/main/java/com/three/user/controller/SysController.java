@@ -5,6 +5,7 @@ import com.three.common.auth.SysAuthority;
 import com.three.common.auth.SysRole;
 import com.three.common.enums.StatusEnum;
 import com.three.common.utils.BeanCopyUtil;
+import com.three.resource_security.utils.LoginUserUtil;
 import com.three.user.entity.Authority;
 import com.three.user.entity.Role;
 import com.three.user.entity.User;
@@ -40,7 +41,7 @@ public class SysController {
     @ApiOperation(value = "获取个人信息")
     @GetMapping("/sys/userInfo")
     public JsonResult userInfo() {
-        return JsonResult.ok().put("user", null);
+        return JsonResult.ok().put("user", LoginUserUtil.getLoginUser());
     }
 
     @ApiOperation(value = "获取左侧菜单信息")

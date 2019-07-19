@@ -1,6 +1,6 @@
 package com.three.order.controller;
 
-import com.three.order.OrderUrl;
+import com.three.common.vo.JsonResult;
 import com.three.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,13 +23,7 @@ public class OrderController {
     private OrderService orderService;
 
     @RequestMapping("/order")
-    public String order(@RequestParam(value = "name", defaultValue = "csw") String name) {
-        return "order " + name + " , i am from port:" + port;
-    }
-
-    @GetMapping(OrderUrl.PLACE_ORDER)
-    public String placeOrder(@RequestParam(value = "name", defaultValue = "csw") String name) {
-        orderService.placeOrder(name);
-        return OrderUrl.PLACE_ORDER;
+    public JsonResult order(@RequestParam(value = "name", defaultValue = "csw") String name) {
+        return JsonResult.ok("order " + name + " , i am from port:" + port);
     }
 }
