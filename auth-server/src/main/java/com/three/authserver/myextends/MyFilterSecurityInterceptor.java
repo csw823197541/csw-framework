@@ -12,13 +12,14 @@ import java.io.IOException;
 
 /**
  * Created by csw on 2018/11/18.
- * Description:
+ * Description: 在FilterSecurityInterceptor拦截器之前执行这个拦截器，目的：注入自定义的权限鉴定类AccessDecisionManager、自定义的权限资源securityMetadataSource
+ * 主要是在创建默认的FilterSecurityInterceptor的时候把我们的accessDecisionManager和securityMetadataSource设置进去
  */
 @Service
 public class MyFilterSecurityInterceptor extends AbstractSecurityInterceptor implements Filter {
 
     @Autowired
-    private MyFilterInvocationSecurityMetadataSource myFilterInvocationSecurityMetadataSource;
+    private MySecurityMetadataSource mySecurityMetadataSource;
 
 
     @Autowired
@@ -34,7 +35,7 @@ public class MyFilterSecurityInterceptor extends AbstractSecurityInterceptor imp
 
     @Override
     public SecurityMetadataSource obtainSecurityMetadataSource() {
-        return this.myFilterInvocationSecurityMetadataSource;
+        return this.mySecurityMetadataSource;
     }
 
     @Override
@@ -54,7 +55,7 @@ public class MyFilterSecurityInterceptor extends AbstractSecurityInterceptor imp
         // 再调用MyAccessDecisionManager的decide方法来校验用户的权限是否足够
         InterceptorStatusToken token = super.beforeInvocation(fi);
         try {
-            //执行下一个拦截器
+            // 执行下一个拦截器
             fi.getChain().doFilter(fi.getRequest(), fi.getResponse());
         } finally {
             super.afterInvocation(token, null);

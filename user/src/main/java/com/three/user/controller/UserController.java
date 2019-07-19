@@ -1,5 +1,7 @@
 package com.three.user.controller;
 
+import com.three.common.auth.LoginUser;
+import com.three.resource_security.utils.LoginUserUtil;
 import com.three.user.entity.User;
 import com.three.user.param.UserParam;
 import com.three.user.service.UserService;
@@ -107,6 +109,7 @@ public class UserController {
     })
     @PostMapping("/findByRole")
     public PageResult<User> queryByRole(Integer page, Integer limit, Long roleId, String searchKey, String searchValue) {
+        LoginUser loginUser = LoginUserUtil.getLoginUser();
         PageQuery pageQuery = new PageQuery(page, limit);
         return userService.findByRole(pageQuery, StatusEnum.OK.getCode(), searchKey, searchValue, roleId);
     }

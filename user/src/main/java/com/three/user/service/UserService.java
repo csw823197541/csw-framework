@@ -3,7 +3,7 @@ package com.three.user.service;
 import com.three.common.auth.SysAuthority;
 import com.three.common.auth.LoginUser;
 import com.three.commonclient.exception.BusinessException;
-//import com.three.resource_security.auth.LoginUserUtil;
+//import com.three.resource_security.utils.LoginUserUtil;
 import com.three.user.entity.Role;
 import com.three.user.entity.User;
 import com.three.user.param.UserParam;
