@@ -16,9 +16,9 @@ import java.util.List;
 @FeignClient(name = ServiceInfo.USER_SERVICE)
 public interface UserClient {
 
-    @GetMapping(value = "/users-anon/internal", params = "username")
+    @GetMapping(value = "/internal/findByUsername", params = "username")
     LoginUser findByUsername(@RequestParam("username") String username);
 
-    @GetMapping(value = "/authorities-anon/internal")
+    @GetMapping(value = "/internal/findAllAuthorities")
     List<SysAuthority> findAllAuthorities();
 }

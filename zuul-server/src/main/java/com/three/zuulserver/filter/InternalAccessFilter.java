@@ -2,6 +2,7 @@ package com.three.zuulserver.filter;
 
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
+import com.three.common.vo.JsonResult;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -26,7 +27,7 @@ public class InternalAccessFilter extends ZuulFilter {
 	public Object run() {
 		RequestContext requestContext = RequestContext.getCurrentContext();
 		requestContext.setResponseStatusCode(HttpStatus.FORBIDDEN.value());
-		requestContext.setResponseBody(HttpStatus.FORBIDDEN.getReasonPhrase());
+		requestContext.setResponseBody("URL contains */internal/*, the gateway considers the interface inaccessible!");
 		requestContext.setSendZuulResponse(false);
 
 		return null;
@@ -37,7 +38,7 @@ public class InternalAccessFilter extends ZuulFilter {
 		RequestContext requestContext = RequestContext.getCurrentContext();
 		HttpServletRequest request = requestContext.getRequest();
 
-		return PatternMatchUtils.simpleMatch("*-anon/internal*", request.getRequestURI());
+		return PatternMatchUtils.simpleMatch("*/internal/*", request.getRequestURI());
 	}
 
 	@Override

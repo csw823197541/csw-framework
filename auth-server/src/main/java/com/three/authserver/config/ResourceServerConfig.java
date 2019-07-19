@@ -51,39 +51,37 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Autowired
     private MyAccessDeniedHandler myAccessDeniedHandler;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     // 权限异常处理返回信息
     @Component
     public class MyAccessDeniedHandler implements AccessDeniedHandler {
-
         @Override
         public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException e) throws IOException, ServletException {
             response.setContentType("application/json;charset=UTF-8");
-            response.setStatus(HttpServletResponse.SC_OK);
-            response.getWriter().write(getResponse(e));
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            Map<String, Object> map = new HashMap<>();
+            map.put("code", HttpServletResponse.SC_FORBIDDEN);
+            map.put("msg", e.getMessage());
+            map.put("data", new ArrayList<>());
+            response.getWriter().write(objectMapper.writeValueAsString(map));
         }
     }
 
     // 认证异常处理返回信息
     @Component
     public class MyAuthenticationEntryPoint implements AuthenticationEntryPoint {
-
         @Override
         public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
             response.setContentType("application/json;charset=UTF-8");
-            response.setStatus(HttpServletResponse.SC_OK);
-            response.getWriter().write(getResponse(e));
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            Map<String, Object> map = new HashMap<>();
+            map.put("code", HttpServletResponse.SC_UNAUTHORIZED);
+            map.put("msg", e.getMessage());
+            map.put("data", new ArrayList<>());
+            response.getWriter().write(objectMapper.writeValueAsString(map));
         }
-    }
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    public String getResponse(RuntimeException e) throws JsonProcessingException {
-        Map<String, Object> map = new HashMap<>();
-        map.put("code", "403");
-        map.put("msg", e.getMessage());
-        map.put("data", new ArrayList<>());
-        return objectMapper.writeValueAsString(map);
     }
 
     @Override
@@ -99,12 +97,11 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
      */
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.anonymous().disable();
         http.authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/**").permitAll();
         http.requestMatcher(new OAuth2RequestedMatcher()).authorizeRequests()
                 .antMatchers(PermitAllUrl.permitAllUrl()).permitAll() // 放开权限的url
                 .anyRequest().authenticated();
-        http.httpBasic().and().csrf().and().cors().disable();
+        http.httpBasic().disable().csrf().disable().cors().disable();
         http.headers().frameOptions().disable();
         http.addFilterBefore(myFilterSecurityInterceptor, FilterSecurityInterceptor.class);
     }

@@ -77,7 +77,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers(PermitAllUrl.permitAllUrl()).permitAll() // 放开权限的url
                 .anyRequest().authenticated().and()
-                .httpBasic().and().csrf().and().cors().disable();
+                .httpBasic().disable().csrf().disable().cors().disable();
     }
 
 }

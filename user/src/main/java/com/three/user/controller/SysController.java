@@ -50,7 +50,7 @@ public class SysController {
         return JsonResult.ok().put("data", menuVoList);
     }
 
-    @GetMapping(value = "/users-anon/internal")
+    @GetMapping(value = "/internal/findByUsername")
     public LoginUser findByUsername(String username) {
         User user = userService.findByUsername(username);
 
@@ -70,7 +70,7 @@ public class SysController {
         return loginUser;
     }
 
-    @GetMapping(value = "/authorities-anon/internal")
+    @GetMapping(value = "/internal/findAllAuthorities")
     List<SysAuthority> findAllAuthorities() {
         List<SysAuthority> sysAuthorityList = new ArrayList<>();
         List<Authority> authorityList = authorityRepository.findAllByStatus(StatusEnum.OK.getCode());
