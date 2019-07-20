@@ -1,5 +1,6 @@
 package com.three.user.controller;
 
+import com.three.common.log.LogAnnotation;
 import com.three.user.entity.Role;
 import com.three.user.param.RoleParam;
 import com.three.user.service.RoleService;
@@ -52,7 +53,7 @@ public class RoleController {
         return JsonResult.ok().put("data", roleList);
     }
 
-//    @Log("添加角色")
+    @LogAnnotation(module = "添加角色")
     @ApiOperation(value = "添加角色")
     @ApiImplicitParam(name = "roleParam", value = "角色信息", required = true, dataType = "RoleParam")
     @PostMapping()
@@ -61,7 +62,7 @@ public class RoleController {
         return JsonResult.ok("添加成功");
     }
 
-//    @Log("修改角色")
+    @LogAnnotation(module = "修改角色")
     @ApiOperation(value = "修改角色")
     @ApiImplicitParam(name = "roleParam", value = "角色信息", required = true, dataType = "RoleParam")
     @PutMapping()
@@ -70,7 +71,7 @@ public class RoleController {
         return JsonResult.ok("修改成功");
     }
 
-//    @Log("删除角色")
+    @LogAnnotation(module = "删除角色")
     @ApiOperation(value = "删除角色")
     @ApiImplicitParam(name = "ids", value = "角色ids", required = true, dataType = "String")
     @DeleteMapping()
@@ -86,7 +87,7 @@ public class RoleController {
         return JsonResult.ok().put("data", roleService.findAuthTree(roleId));
     }
 
-//    @Log("角色绑定权限")
+    @LogAnnotation(module = "角色绑定权限")
     @ApiOperation(value = "角色绑定权限")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "roleId", value = "角色id", required = true, dataType = "Long"),
@@ -98,7 +99,7 @@ public class RoleController {
         return JsonResult.ok();
     }
 
-//    @Log("角色绑定用户")
+    @LogAnnotation(module = "角色绑定用户")
     @ApiOperation(value = "角色绑定用户")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "roleId", value = "角色id", required = true, dataType = "Long"),

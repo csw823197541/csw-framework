@@ -6,6 +6,7 @@ package com.three.common.contants;
  */
 public interface ServiceInfo {
 
-    public static String USER_SERVICE = "user-service";
-    public static String AUTH_SERVER = "auth-server";
+    String USER_SERVICE = "user-service";
+    String AUTH_SERVER = "auth-server";
+    String LOG_SERVER = "log-server";
 }

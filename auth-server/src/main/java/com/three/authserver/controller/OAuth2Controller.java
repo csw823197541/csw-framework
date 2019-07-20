@@ -1,5 +1,7 @@
 package com.three.authserver.controller;
 
+import com.three.common.log.Log;
+import com.three.log.autoconfigure.LogMqClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -9,6 +11,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 @RestController
@@ -91,35 +95,35 @@ public class OAuth2Controller {
         boolean flag = tokenServices.revokeToken(access_token);
         if (flag) {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//            saveLogoutLog(authentication.getName());
+            saveLogoutLog(authentication.getName());
         }
     }
 
 //    @Autowired
 //    private LogClient logClient;
 
-//    @Autowired
-//    private LogMqClient logMqClient;
-//
-//    /**
-//     * 退出日志
-//     *
-//     * @param username
-//     */
-//    private void saveLogoutLog(String username) {
-//        log.info("{}退出", username);
+    @Autowired
+    private LogMqClient logMqClient;
+
+    /**
+     * 退出日志
+     *
+     * @param username
+     */
+    private void saveLogoutLog(String username) {
+        log.info("{}退出登录", username);
 //        // 异步
-////        CompletableFuture.runAsync(() -> {
-////            try {
-////                Log log = Log.builder().username(username).module("退出").createTime(new Date()).build();
-////                logClient.save(log);
-////            } catch (Exception e) {
-////                // do nothing
-////            }
-////
-////        });
-//        // 2018.07.29 调整为mq的方式记录退出日志
-//        logMqClient.sendLogMsg("退出", username, null, null, true);
-//    }
+//        CompletableFuture.runAsync(() -> {
+//            try {
+//                Log log = Log.builder().username(username).module("退出登录").build();
+//                logClient.save(log);
+//            } catch (Exception e) {
+//                // do nothing
+//            }
+//
+//        });
+        // 调整为mq的方式记录退出日志
+        logMqClient.sendLogMsg("退出登录", username, null, null, true);
+    }
 
 }

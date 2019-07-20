@@ -3,6 +3,7 @@ package com.three.user.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
+import com.three.common.log.LogAnnotation;
 import com.three.user.entity.Authority;
 import com.three.user.param.AuthSyncParam;
 import com.three.user.param.AuthorityParam;
@@ -28,7 +29,7 @@ public class AuthorityController {
     @Autowired
     private AuthorityService authorityService;
 
-//    @Log("添加权限")
+    @LogAnnotation(module = "添加权限")
     @ApiOperation(value = "添加权限")
     @ApiImplicitParam(name = "authorityParam", value = "权限信息", required = true, dataType = "AuthorityParam")
     @PostMapping()
@@ -37,7 +38,7 @@ public class AuthorityController {
         return JsonResult.ok("添加成功");
     }
 
-//    @Log("修改权限")
+    @LogAnnotation(module = "修改权限")
     @ApiOperation(value = "修改权限")
     @ApiImplicitParam(name = "authorityParam", value = "权限信息", required = true, dataType = "AuthorityParam")
     @PutMapping()
@@ -46,7 +47,7 @@ public class AuthorityController {
         return JsonResult.ok("修改成功");
     }
 
-//    @Log("删除权限")
+    @LogAnnotation(module = "删除权限")
     @ApiOperation(value = "删除权限")
     @ApiImplicitParam(name = "id", value = "权限id", required = true, dataType = "Long")
     @DeleteMapping()
@@ -55,7 +56,7 @@ public class AuthorityController {
         return JsonResult.ok("删除成功");
     }
 
-//    @Log("同步权限")
+    @LogAnnotation(module = "同步权限")
     @ApiOperation(value = "同步权限")
     @ApiImplicitParam(name = "authSyncParam", value = "接口列表", required = true, dataType = "AuthSyncParam")
     @PostMapping("/sync")

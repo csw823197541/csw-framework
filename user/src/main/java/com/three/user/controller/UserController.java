@@ -1,6 +1,7 @@
 package com.three.user.controller;
 
 import com.three.common.auth.LoginUser;
+import com.three.common.log.LogAnnotation;
 import com.three.resource_security.utils.LoginUserUtil;
 import com.three.user.entity.User;
 import com.three.user.param.UserParam;
@@ -46,7 +47,7 @@ public class UserController {
         return userService.query(pageQuery, StatusEnum.OK.getCode(), searchKey, searchValue);
     }
 
-//    @Log("添加用户")
+    @LogAnnotation(module = "添加用户")
     @ApiOperation(value = "添加用户", notes = "")
     @ApiImplicitParam(name = "userParam", value = "用户信息", required = true, dataType = "UserParam")
     @PostMapping()
@@ -55,7 +56,7 @@ public class UserController {
         return JsonResult.ok("添加成功");
     }
 
-//    @Log("修改用户")
+    @LogAnnotation(module = "修改用户")
     @ApiOperation(value = "修改用户", notes = "")
     @ApiImplicitParam(name = "userParam", value = "用户信息", required = true, dataType = "UserParam")
     @PutMapping()
@@ -64,7 +65,7 @@ public class UserController {
         return JsonResult.ok("修改成功");
     }
 
-//    @Log("分配角色")
+    @LogAnnotation(module = "分配角色")
     @ApiOperation(value = "分配角色", notes = "")
     @ApiImplicitParam(name = "userParam", value = "用户信息", required = true, dataType = "UserParam")
     @PutMapping("/assignRole")
@@ -73,7 +74,7 @@ public class UserController {
         return JsonResult.ok("修改成功");
     }
 
-//    @Log("修改用户状态")
+    @LogAnnotation(module = "修改用户状态")
     @ApiOperation(value = "修改用户状态", notes = "")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "ids", value = "用户ids", required = true, dataType = "String"),
@@ -85,7 +86,7 @@ public class UserController {
         return JsonResult.ok();
     }
 
-//    @Log("修改密码")
+    @LogAnnotation(module = "修改密码")
     @ApiOperation(value = "修改密码", notes = "")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "oldPsw", value = "原密码", required = true, dataType = "String"),

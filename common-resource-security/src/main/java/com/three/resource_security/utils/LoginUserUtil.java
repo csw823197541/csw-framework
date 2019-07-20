@@ -33,4 +33,12 @@ public class LoginUserUtil {
         }
         return null;
     }
+
+    public static String getLoginUsername() {
+        LoginUser loginUser = getLoginUser();
+        if (loginUser != null) {
+            return loginUser.getUsername();
+        }
+        return null;
+    }
 }

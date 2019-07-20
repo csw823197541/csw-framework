@@ -2,7 +2,9 @@ package com.three.zuulserver.controller;
 
 import com.three.common.auth.LoginUser;
 import com.three.common.contants.SystemClientInfo;
+import com.three.common.log.Log;
 import com.three.common.vo.JsonResult;
+import com.three.zuulserver.feign.LogClient;
 import com.three.zuulserver.feign.Oauth2Client;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * 登陆、刷新token、退出
@@ -48,13 +51,13 @@ public class SysTokenController {
         parameters.put(CLIENT_ID, SystemClientInfo.CLIENT_ID);
         parameters.put("client_secret", SystemClientInfo.CLIENT_SECRET);
         parameters.put(SCOPE, SystemClientInfo.CLIENT_SCOPE);
-		parameters.put("username", username);
+        parameters.put("username", username);
 //        // 为了支持多类型登录，这里在username后拼装上登录类型
 //        parameters.put("username", username + "|" + CredentialType.USERNAME.name());
         parameters.put("password", password);
 
         Map<String, Object> tokenInfo = oauth2Client.postAccessToken(parameters);
-//        saveLoginLog(username, "用户名密码登陆");
+        saveLoginLog(username, "用户名密码登陆");
 
         return tokenInfo;
     }
@@ -109,28 +112,27 @@ public class SysTokenController {
 //        return tokenInfo;
 //    }
 
-//    @Autowired
-//    private LogClient logClient;
-//
-//    /**
-//     * 登陆日志
-//     *
-//     * @param username
-//     */
-//    private void saveLoginLog(String username, String remark) {
-//        log.info("{}登陆", username);
-//        // 异步
-//        CompletableFuture.runAsync(() -> {
-//            try {
-//                Log log = Log.builder().username(username).module("登陆").remark(remark).createTime(new Date())
-//                        .build();
-//                logClient.save(log);
-//            } catch (Exception e) {
-//                // do nothing
-//            }
-//
-//        });
-//    }
+    @Autowired
+    private LogClient logClient;
+
+    /**
+     * 登陆日志
+     *
+     * @param username
+     */
+    private void saveLoginLog(String username, String message) {
+        log.info("{}登陆", username);
+        // 异步
+        CompletableFuture.runAsync(() -> {
+            try {
+                Log log = Log.builder().username(username).module("登陆").message(message).build();
+                logClient.save(log);
+            } catch (Exception e) {
+                // do nothing
+            }
+
+        });
+    }
 
     /**
      * 系统刷新refresh_token

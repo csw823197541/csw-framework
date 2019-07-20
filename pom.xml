@@ -16,10 +16,12 @@
         <module>common-client</module>
         <module>common-resource-security</module>
         <module>common-jpa</module>
-        <module>zuul-server</module>
+        <module>log-starter</module>
+        <module>log-server</module>
         <module>auth-server</module>
         <module>user</module>
         <module>order</module>
+        <module>zuul-server</module>
     </modules>
 
     <parent>

@@ -2,6 +2,7 @@ package com.three.authserver.controller;
 
 import com.three.authserver.service.RedisClientDetailsService;
 import com.three.common.contants.SystemClientInfo;
+import com.three.common.log.LogAnnotation;
 import com.three.common.vo.PageResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class ClientController {
     private BCryptPasswordEncoder passwordEncoder;
 
     @PreAuthorize("hasAuthority('client:save')")
-//    @LogAnnotation(module = "保存client")
+    @LogAnnotation(module = "保存client")
     @PostMapping
     public void save(@RequestBody BaseClientDetails clientDetails) {
         ClientDetails client = getAndCheckClient(clientDetails.getClientId(), false);
@@ -46,7 +47,7 @@ public class ClientController {
     }
 
     @PreAuthorize("hasAuthority('client:update')")
-//    @LogAnnotation(module = "修改client")
+    @LogAnnotation(module = "修改client")
     @PutMapping
     public void update(@RequestBody BaseClientDetails clientDetails) {
         getAndCheckClient(clientDetails.getClientId(), true);
@@ -55,7 +56,7 @@ public class ClientController {
     }
 
     @PreAuthorize("hasAuthority('client:update')")
-//    @LogAnnotation(module = "修改client密码")
+    @LogAnnotation(module = "修改client密码")
     @PutMapping(value = "/{clientId}", params = "secret")
     public void updateSecret(@PathVariable String clientId, String secret) {
         getAndCheckClient(clientId, true);
@@ -66,7 +67,7 @@ public class ClientController {
         log.info("修改client密码：{},{}", clientId, secret);
     }
 
-//    @PreAuthorize("hasAuthority('client:query')")
+    //    @PreAuthorize("hasAuthority('client:query')")
     @GetMapping
     public PageResult<ClientDetails> findClients() {
         List<ClientDetails> clientDetails = clientDetailsService.listClientDetails();
@@ -74,14 +75,14 @@ public class ClientController {
         return new PageResult<>(clientDetails.size(), clientDetails);
     }
 
-    @PreAuthorize("hasAuthority('client:query')")
+    //    @PreAuthorize("hasAuthority('client:query')")
     @GetMapping("/{clientId}")
     public ClientDetails getById(@PathVariable String clientId) {
         return getAndCheckClient(clientId, true);
     }
 
-    @PreAuthorize("hasAuthority('client:del')")
-//    @LogAnnotation(module = "删除client")
+    //    @PreAuthorize("hasAuthority('client:del')")
+    @LogAnnotation(module = "删除client")
     @DeleteMapping("/{clientId}")
     public void delete(@PathVariable String clientId) {
         getAndCheckClient(clientId, true);
