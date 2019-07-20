@@ -27,20 +27,24 @@ public class LogMqClient {
     }
 
     public void sendLogMsg(String module, String username, String params, String message, boolean flag) {
+        Log log = new Log();
+        if (StringUtils.isNotBlank(username)) {
+            log.setUsername(username);
+        } else {
+            log.setUsername(LoginUserUtil.getLoginUsername());
+        }
+
+        log.setFlag(flag);
+        log.setModule(module);
+        log.setParams(params);
+        log.setMessage(message);
+        log.setTime(1L);
+        sendLogMsg(log);
+    }
+
+    public void sendLogMsg(Log log) {
         CompletableFuture.runAsync(() -> {
             try {
-                Log log = new Log();
-                if (StringUtils.isNotBlank(username)) {
-                    log.setUsername(username);
-                } else {
-                    log.setUsername(LoginUserUtil.getLoginUsername());
-                }
-
-                log.setFlag(flag);
-                log.setModule(module);
-                log.setParams(params);
-                log.setMessage(message);
-
                 amqpTemplate.convertAndSend(LogQueue.LOG_QUEUE, log);
                 logger.info("发送日志到队列：{}", log);
             } catch (Exception e2) {

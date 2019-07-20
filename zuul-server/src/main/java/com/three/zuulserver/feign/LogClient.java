@@ -10,5 +10,5 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface LogClient {
 
     @PostMapping("/internal/saveLog")
-    void save(@RequestBody Log log);
+    public void save(@RequestBody Log log);
 }

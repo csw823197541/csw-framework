@@ -1,6 +1,7 @@
 package com.three.authserver.controller;
 
 import com.three.common.log.Log;
+import com.three.common.utils.LogUtil;
 import com.three.log.autoconfigure.LogMqClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -123,7 +124,11 @@ public class OAuth2Controller {
 //
 //        });
         // 调整为mq的方式记录退出日志
-        logMqClient.sendLogMsg("退出登录", username, null, null, true);
+
+        Log log = Log.builder().module("退出登录").username(username).message("successfully").flag(true).build();
+        LogUtil.setLogRequestInfo(log);
+        logMqClient.sendLogMsg(log);
+//        logMqClient.sendLogMsg("退出登录", username, null, "successfully", true);
     }
 
 }

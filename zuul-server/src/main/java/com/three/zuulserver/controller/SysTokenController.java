@@ -3,6 +3,7 @@ package com.three.zuulserver.controller;
 import com.three.common.auth.LoginUser;
 import com.three.common.contants.SystemClientInfo;
 import com.three.common.log.Log;
+import com.three.common.utils.LogUtil;
 import com.three.common.vo.JsonResult;
 import com.three.zuulserver.feign.LogClient;
 import com.three.zuulserver.feign.Oauth2Client;
@@ -121,11 +122,12 @@ public class SysTokenController {
      * @param username
      */
     private void saveLoginLog(String username, String message) {
-        log.info("{}登陆", username);
+        log.info("{}" + message, username);
+        Log log = Log.builder().username(username).module("登录").message(message).build();
+        LogUtil.setLogRequestInfo(log);
         // 异步
         CompletableFuture.runAsync(() -> {
             try {
-                Log log = Log.builder().username(username).module("登陆").message(message).build();
                 logClient.save(log);
             } catch (Exception e) {
                 // do nothing
@@ -142,7 +144,6 @@ public class SysTokenController {
      */
     @PostMapping("/sys/refresh_token")
     public Map<String, Object> refresh_token(String refresh_token) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Map<String, String> parameters = new HashMap<>();
         parameters.put(GRANT_TYPE, "refresh_token");
         parameters.put(CLIENT_ID, SystemClientInfo.CLIENT_ID);
@@ -160,7 +161,6 @@ public class SysTokenController {
      */
     @GetMapping("/sys/logout")
     public JsonResult logout(String access_token, @RequestHeader(required = false, value = "Authorization") String token) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (StringUtils.isBlank(access_token)) {
             if (StringUtils.isNoneBlank(token)) {
                 access_token = token.substring(BEARER_TYPE.length() + 1);

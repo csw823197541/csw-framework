@@ -4,8 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.three.common.log.Log;
 import com.three.common.log.LogAnnotation;
 import com.three.common.log.LogQueue;
-import com.three.common.utils.HttpServletUtil;
-import com.three.common.utils.UserAgentGetter;
+import com.three.common.utils.LogUtil;
 import com.three.resource_security.utils.LoginUserUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -16,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -57,9 +55,6 @@ public class LogAop {
                 Map<String, Object> params = new HashMap<>();
                 for (int i = 0; i < paramNames.length; i++) {
                     Object value = args[i];
-//                    if (value instanceof Serializable) {
-//                        params.put(paramNames[i], value);
-//                    }
                     params.put(paramNames[i], value);
                 }
 
@@ -71,19 +66,13 @@ public class LogAop {
             }
         }
 
-        // 获取request
-        HttpServletRequest request = HttpServletUtil.getRequest();
-        // 获取IP地址
-        UserAgentGetter userAgentGetter = new UserAgentGetter(request);
-        log.setIpAddress(userAgentGetter.getIpAddr());
-        log.setOsName(userAgentGetter.getOS());
-        log.setDevice(userAgentGetter.getDevice());
-        log.setBrowserType(userAgentGetter.getBrowser());
+        LogUtil.setLogRequestInfo(log);
 
         long currentTime = System.currentTimeMillis();
         try {
             Object object = joinPoint.proceed();// 执行原方法
             log.setFlag(Boolean.TRUE);
+            log.setMessage("successfully");
             currentTime = System.currentTimeMillis() - currentTime;
             return object;
         } catch (Exception e) { // 方法执行失败
