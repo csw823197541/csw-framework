@@ -13,7 +13,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
  */
 @EnableAsync(proxyTargetClass = true)
 @Configuration
-public class AsyTaskExecutorConfig {
+public class AsyncTaskExecutorConfig {
 
 	@Bean
 	public TaskExecutor taskExecutor() {

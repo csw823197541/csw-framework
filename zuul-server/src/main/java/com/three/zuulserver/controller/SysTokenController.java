@@ -123,7 +123,7 @@ public class SysTokenController {
      */
     private void saveLoginLog(String username, String message) {
         log.info("{}" + message, username);
-        Log log = Log.builder().username(username).module("登录").message(message).build();
+        Log log = Log.builder().username(username).module("登录").message(message).flag(Boolean.TRUE).build();
         LogUtil.setLogRequestInfo(log);
         // 异步
         CompletableFuture.runAsync(() -> {
@@ -131,8 +131,8 @@ public class SysTokenController {
                 logClient.save(log);
             } catch (Exception e) {
                 // do nothing
-            }
 
+            }
         });
     }
 

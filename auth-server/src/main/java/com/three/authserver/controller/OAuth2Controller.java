@@ -125,7 +125,7 @@ public class OAuth2Controller {
 //        });
         // 调整为mq的方式记录退出日志
 
-        Log log = Log.builder().module("退出登录").username(username).message("successfully").flag(true).build();
+        Log log = Log.builder().module("退出登录").username(username).message("successfully").flag(Boolean.TRUE).build();
         LogUtil.setLogRequestInfo(log);
         logMqClient.sendLogMsg(log);
 //        logMqClient.sendLogMsg("退出登录", username, null, "successfully", true);
