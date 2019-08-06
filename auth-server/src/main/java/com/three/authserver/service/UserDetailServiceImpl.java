@@ -45,7 +45,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
         if (sysUser == null) {
             throw new BusinessException("用户不存在");
         } else if (!sysUser.isEnabled()) {
-            throw new DisabledException("用户已作废");
+            throw new BusinessException("用户已作废");
         }
 
 //        if (params.length > 1) {

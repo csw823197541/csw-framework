@@ -36,21 +36,19 @@ public class ExceptionHandlerAdvice {
 
 		String msg = exception.getMessage();
 
-		if (!StringUtils.isEmpty(msg)) {
-			int index = msg.indexOf("\n");
-			if (index > 0) {
-				String string = msg.substring(index);
-				if (!StringUtils.isEmpty(string)) {
-					JSONObject json = JSONObject.parseObject(string.trim());
-					data.putAll(json.getInnerMap());
-				}
-			}
-		}
-		if (data.isEmpty()) {
-			data.put("msg", msg);
-		}
+//		if (!StringUtils.isEmpty(msg)) {
+//			int index = msg.indexOf("\n");
+//			if (index > 0) {
+//				String string = msg.substring(index);
+//				if (!StringUtils.isEmpty(string)) {
+//					JSONObject json = JSONObject.parseObject(string.trim());
+//					data.putAll(json.getInnerMap());
+//				}
+//			}
+//		}
+		data.put("msg", msg);
 
-		data.put("code", httpStatus + "");
+		data.put("code", httpStatus);
 
 		response.setStatus(httpStatus);
 
