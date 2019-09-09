@@ -1,11 +1,12 @@
-package com.three.common.contants;
+package com.three.common.constants;
 
 /**
  * Created by csw on 2019/07/17.
  * Description:
  */
-public interface ServiceInfo {
+public interface ServiceConstant {
 
+    String API_PRE = "three-";
     String USER_SERVICE = "user-service";
     String AUTH_SERVER = "auth-server";
     String LOG_SERVER = "log-server";

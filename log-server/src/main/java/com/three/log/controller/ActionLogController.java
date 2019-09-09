@@ -25,6 +25,7 @@ public class ActionLogController {
 	@Autowired
 	private ActionLogService actionLogService;
 
+	@ApiOperation(value = "保存日志（内部接口）")
 	@PostMapping("/internal/saveLog")
 	public void save(@RequestBody Log log) {
 		actionLogService.saveLog(log);

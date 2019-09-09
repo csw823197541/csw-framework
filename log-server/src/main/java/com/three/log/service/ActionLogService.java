@@ -40,6 +40,9 @@ public class ActionLogService extends BaseService<ActionLog> {
     public void saveLog(Log log) {
 
         ActionLog actionLog = new ActionLog();
+        if (log.getUsername() == null) {
+            log.setUsername(LoginUserUtil.getLoginUsername());
+        }
         actionLog.setUsername(log.getUsername());
         actionLog.setLogType(log.getFlag() ? ActionLogEnum.INFO.getCode() : ActionLogEnum.ERROR.getCode());
         actionLog.setMessage(log.getMessage());

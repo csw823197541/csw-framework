@@ -51,6 +51,7 @@ public class SysController {
         return JsonResult.ok().put("data", menuVoList);
     }
 
+    @ApiOperation(value = "按用户名查找用户（内部接口）")
     @GetMapping(value = "/internal/findByUsername")
     public LoginUser findByUsername(String username) {
         User user = userService.findByUsername(username);
@@ -71,6 +72,7 @@ public class SysController {
         return loginUser;
     }
 
+    @ApiOperation(value = "查找所有权限（内部接口）")
     @GetMapping(value = "/internal/findAllAuthorities")
     List<SysAuthority> findAllAuthorities() {
         List<SysAuthority> sysAuthorityList = new ArrayList<>();

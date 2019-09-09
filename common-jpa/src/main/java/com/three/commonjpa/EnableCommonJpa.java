@@ -1,6 +1,8 @@
 package com.three.commonjpa;
 
+import com.three.commonjpa.config.ComponentScanConfig;
 import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import java.lang.annotation.*;
@@ -14,5 +16,6 @@ import java.lang.annotation.*;
 @Documented
 @ServletComponentScan
 @EnableJpaAuditing
+@Import({ComponentScanConfig.class})
 public @interface EnableCommonJpa {
 }

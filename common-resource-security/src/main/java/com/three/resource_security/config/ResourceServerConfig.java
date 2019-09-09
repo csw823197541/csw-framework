@@ -1,7 +1,7 @@
 package com.three.resource_security.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.three.common.contants.PermitAllUrl;
+import com.three.common.constants.PermitAllUrl;
 import com.three.resource_security.myextends.MyFilterSecurityInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;

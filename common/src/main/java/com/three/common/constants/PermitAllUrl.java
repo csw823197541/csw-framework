@@ -1,4 +1,4 @@
-package com.three.common.contants;
+package com.three.common.constants;
 
 import java.util.Collections;
 import java.util.HashSet;

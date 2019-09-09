@@ -1,6 +1,6 @@
 package com.three.zuulserver.feign;
 
-import com.three.common.contants.ServiceInfo;
+import com.three.common.constants.ServiceConstant;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
 
-@FeignClient(ServiceInfo.AUTH_SERVER)
+@FeignClient(ServiceConstant.AUTH_SERVER)
 public interface Oauth2Client {
 
     /**

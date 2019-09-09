@@ -3,7 +3,6 @@ package com.three.log.autoconfigure;
 
 import com.three.common.log.Log;
 import com.three.common.log.LogQueue;
-import com.three.resource_security.utils.LoginUserUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,8 +29,6 @@ public class LogMqClient {
         Log log = new Log();
         if (StringUtils.isNotBlank(username)) {
             log.setUsername(username);
-        } else {
-            log.setUsername(LoginUserUtil.getLoginUsername());
         }
 
         log.setFlag(flag);

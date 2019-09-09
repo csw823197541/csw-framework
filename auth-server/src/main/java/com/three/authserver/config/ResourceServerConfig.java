@@ -1,9 +1,8 @@
 package com.three.authserver.config;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.three.authserver.myextends.MyFilterSecurityInterceptor;
-import com.three.common.contants.PermitAllUrl;
+import com.three.common.constants.PermitAllUrl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

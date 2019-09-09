@@ -5,7 +5,6 @@ import com.three.common.log.Log;
 import com.three.common.log.LogAnnotation;
 import com.three.common.log.LogQueue;
 import com.three.common.utils.LogUtil;
-import com.three.resource_security.utils.LoginUserUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -45,7 +44,7 @@ public class LogAop {
         log.setMethod(methodName);
 
         // 用户名
-        log.setUsername(LoginUserUtil.getLoginUsername());
+//        log.setUsername(LoginUserUtil.getLoginUsername());
 
         if (logAnnotation.recordParam()) { // 是否要记录方法的参数数据
             String[] paramNames = methodSignature.getParameterNames();// 参数名

@@ -1,7 +1,7 @@
 package com.three.authserver.controller;
 
 import com.three.authserver.service.RedisClientDetailsService;
-import com.three.common.contants.SystemClientInfo;
+import com.three.common.constants.SystemClientConstant;
 import com.three.common.log.LogAnnotation;
 import com.three.common.vo.PageResult;
 import lombok.extern.slf4j.Slf4j;
@@ -114,7 +114,7 @@ public class ClientController {
     }
 
     private void checkSystemClient(String clientId) {
-        if (SystemClientInfo.CLIENT_ID.equals(clientId)) {
+        if (SystemClientConstant.CLIENT_ID.equals(clientId)) {
             throw new IllegalArgumentException("不能操作系统数据");
         }
     }
@@ -124,7 +124,7 @@ public class ClientController {
      * 在扩展字段里放一个isSystem标注一下
      *
      * @param clientDetails
-     * @see SystemClientInfo
+     * @see SystemClientConstant
      */
     private boolean isSystemClient(ClientDetails clientDetails) {
         BaseClientDetails baseClientDetails = (BaseClientDetails) clientDetails;
@@ -134,7 +134,7 @@ public class ClientController {
             baseClientDetails.setAdditionalInformation(additionalInformation);
         }
 
-        boolean isSystem = SystemClientInfo.CLIENT_ID.equalsIgnoreCase(baseClientDetails.getClientId());
+        boolean isSystem = SystemClientConstant.CLIENT_ID.equalsIgnoreCase(baseClientDetails.getClientId());
         baseClientDetails.addAdditionalInformation("isSystem", isSystem);
 
         return isSystem;

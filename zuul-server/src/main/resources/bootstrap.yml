@@ -1,13 +1,15 @@
 spring:
   application:
     name: zuul-server
-  cloud:
-    config:
-      discovery:
-        enabled: true
-        serviceId: config-server
-      profile: dev
-      fail-fast: true
+  profiles:
+    active: dev
+#  cloud:
+#    config:
+#      discovery:
+#        enabled: true
+#        serviceId: config-server
+#      profile: dev
+#      fail-fast: true
 server:
   port: 8084
 eureka:
