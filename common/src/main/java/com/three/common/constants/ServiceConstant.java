@@ -7,7 +7,7 @@ package com.three.common.constants;
 public interface ServiceConstant {
 
     String API_PRE = "three-";
-    String USER_SERVICE = "user-service";
+    String USER_SERVICE = "user-server";
     String AUTH_SERVER = "auth-server";
     String LOG_SERVER = "log-server";
 }

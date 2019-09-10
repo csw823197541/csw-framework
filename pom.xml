@@ -19,8 +19,8 @@
         <module>log-starter</module>
         <module>log-server</module>
         <module>auth-server</module>
-        <module>quartz-server</module>
-        <module>user</module>
+        <module>develop-server</module>
+        <module>user-server</module>
         <module>order</module>
         <module>zuul-server</module>
     </modules>
@@ -92,7 +92,7 @@
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
-                    <version>${spring-boot.version}</version>
+                    <!--<version>${spring-boot.version}</version>-->
                     <executions>
                         <execution>
                             <goals>

@@ -65,7 +65,7 @@ logging:
 ribbon:
   eager-load:
     enabled: true
-    clients: user-service
+    clients: user-server
   ReadTimeout: 10000
   ConnectTimeout: 10000
 hystrix:

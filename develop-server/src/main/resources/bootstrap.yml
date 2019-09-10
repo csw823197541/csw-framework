@@ -1,9 +1,9 @@
 server:
-  port: 3333
+  port: 9999
 
 spring:
   application:
-    name: user-service
+    name: develop-server
   profiles:
     active: dev
 #  cloud:

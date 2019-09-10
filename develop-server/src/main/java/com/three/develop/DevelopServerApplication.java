@@ -1,4 +1,4 @@
-package com.three.quartz;
+package com.three.develop;
 
 import com.three.commonclient.EnableCommonClient;
 import com.three.commonjpa.EnableCommonJpa;
@@ -10,10 +10,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @EnableCommonClient
 @EnableCommonJpa
 //@EnableResourceSecurity
-public class QuartzServerApplication {
+public class DevelopServerApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(QuartzServerApplication.class, args);
+        SpringApplication.run(DevelopServerApplication.class, args);
     }
 
 }

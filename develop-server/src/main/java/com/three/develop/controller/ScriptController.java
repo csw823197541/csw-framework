@@ -1,4 +1,4 @@
-package com.three.quartz.controller;
+package com.three.develop.controller;
 
 import com.three.common.enums.StatusEnum;
 import com.three.common.log.LogAnnotation;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Api(value = "脚本管理", tags = "脚本管理")
 @RestController
-@RequestMapping("/quartz/scripts")
+@RequestMapping("/develop/scripts")
 public class ScriptController {
 
 	@Autowired

@@ -39,12 +39,11 @@ public class LogAop {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         LogAnnotation logAnnotation = methodSignature.getMethod().getDeclaredAnnotation(LogAnnotation.class);
         log.setModule(logAnnotation.module());
+        // 用户名
+//        log.setUsername(logAnnotation.username());
 
         String methodName = joinPoint.getTarget().getClass().getName() + "." + methodSignature.getName() + "()";
         log.setMethod(methodName);
-
-        // 用户名
-//        log.setUsername(LoginUserUtil.getLoginUsername());
 
         if (logAnnotation.recordParam()) { // 是否要记录方法的参数数据
             String[] paramNames = methodSignature.getParameterNames();// 参数名

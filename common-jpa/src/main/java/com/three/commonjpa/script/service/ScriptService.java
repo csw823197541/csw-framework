@@ -2,6 +2,7 @@ package com.three.commonjpa.script.service;
 
 import com.google.common.base.Preconditions;
 import com.three.common.utils.BeanCopyUtil;
+import com.three.common.utils.GroovyCommonUtil1;
 import com.three.common.utils.StringUtil;
 import com.three.common.vo.PageQuery;
 import com.three.common.vo.PageResult;
@@ -34,6 +35,8 @@ public class ScriptService extends BaseService<Script> {
         Script script = new Script();
         script = (Script) BeanCopyUtil.copyBean(param, script);
 
+        GroovyCommonUtil1.addClass(script.getName(), script.getCode());
+
         scriptRepository.save(script);
     }
 
@@ -44,7 +47,11 @@ public class ScriptService extends BaseService<Script> {
         Script script = getEntityById(scriptRepository, param.getId());
         script.setName(param.getName());
         script.setCode(param.getCode());
+        script.setVersion(param.getVersion());
         script.setRemark(param.getRemark());
+
+        GroovyCommonUtil1.removeClass(script.getName());
+        GroovyCommonUtil1.addClass(script.getName(), script.getCode());
 
         scriptRepository.save(script);
     }
@@ -57,7 +64,10 @@ public class ScriptService extends BaseService<Script> {
             Script script = getEntityById(scriptRepository, id);
             script.setStatus(code);
             scriptList.add(script);
+
+            GroovyCommonUtil1.removeClass(script.getName());
         }
+
         scriptRepository.saveAll(scriptList);
     }
 

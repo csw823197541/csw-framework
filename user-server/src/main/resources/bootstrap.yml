@@ -1,9 +1,9 @@
 server:
-  port: 9999
+  port: 3333
 
 spring:
   application:
-    name: quartz-server
+    name: user-server
   profiles:
     active: dev
 #  cloud:

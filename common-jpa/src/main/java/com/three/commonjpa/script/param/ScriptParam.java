@@ -19,5 +19,7 @@ public class ScriptParam {
 
     private String code;
 
+    private String version;
+
     private String remark;
 }

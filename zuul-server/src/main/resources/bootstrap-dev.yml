@@ -28,12 +28,12 @@ zuul:
     three-log-server:
       path: /three-log-server/**
       serviceId: log-server
-    three-quartz-server:
-      path: /three-quartz-server/**
-      serviceId: quartz-server
-    three-user-service:
-      path: /three-user-service/**
-      serviceId: user-service
+    three-develop-server:
+      path: /three-develop-server/**
+      serviceId: develop-server
+    three-user-server:
+      path: /three-user-server/**
+      serviceId: user-server
     three-order-service:
       path: /three-order-service/**
       serviceId: order-service

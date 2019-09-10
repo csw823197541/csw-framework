@@ -1,4 +1,4 @@
-package com.three.quartz.config;
+package com.three.develop.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,7 +27,7 @@ public class SwaggerConfig {
                         .version("1.0")
                         .build())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.three.quartz"))
+                .apis(RequestHandlerSelectors.basePackage("com.three.develop"))
                 .paths(PathSelectors.any())
                 .build();
     }

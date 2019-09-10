@@ -19,10 +19,8 @@ public class GroovyCommonUtil1 {
 
     private static GroovyClassLoader groovyClassLoader = new GroovyClassLoader();
 
-    private static void cleanClassCache(String prefix) {
-        for (String scriptName : groovyClassCache.keySet()) {
-            groovyClassCache.remove(scriptName);
-        }
+    public static void removeClass(String scriptName) {
+        groovyClassCache.remove(scriptName);
     }
 
     public static Class getClass(String scriptName) {

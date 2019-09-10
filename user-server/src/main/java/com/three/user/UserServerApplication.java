@@ -13,10 +13,10 @@ import org.springframework.context.annotation.Import;
 @EnableCommonJpa
 @EnableResourceSecurity
 @Import({ComponentScanConfig.class})
-public class UserServiceApplication {
+public class UserServerApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(UserServiceApplication.class, args);
+        SpringApplication.run(UserServerApplication.class, args);
     }
 
 }
