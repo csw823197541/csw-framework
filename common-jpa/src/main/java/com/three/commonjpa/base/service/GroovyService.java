@@ -1,13 +1,16 @@
 package com.three.commonjpa.base.service;
 
 import com.google.common.base.Preconditions;
-import com.three.common.utils.GroovyCommonUtil1;
 import com.three.commonjpa.script.entity.Script;
 import com.three.commonjpa.script.repository.ScriptRepository;
+import groovy.lang.GroovyClassLoader;
 import groovy.lang.GroovyObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by csw on 2019/09/08.
@@ -16,6 +19,8 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class GroovyService {
+
+    private static Map<String, Class> groovyClassCache = new ConcurrentHashMap<>();
 
     @Autowired
     private ScriptRepository scriptRepository;
@@ -40,12 +45,9 @@ public class GroovyService {
 
         try {
 
-            if (GroovyCommonUtil1.getClass(scriptName) == null) {
-                Script script = getScriptByName(scriptName);
-                GroovyCommonUtil1.addClass(scriptName, script.getCode());
-            }
+            Script script = getScriptByName(scriptName);
 
-            Class clazz = GroovyCommonUtil1.getClass(scriptName);
+            Class clazz = getClass(scriptName, script.getCode(), script.getVersion());
             GroovyObject instance = (GroovyObject) clazz.newInstance();
 
             try {
@@ -59,5 +61,36 @@ public class GroovyService {
         }
 
         return res;
+    }
+
+    private void removeClass(String prefix) {
+        for (String key : groovyClassCache.keySet()) {
+            if (key.startsWith(prefix)) {
+                groovyClassCache.remove(prefix);
+            }
+        }
+    }
+
+    private Class getClass(String scriptName, String code, String version) {
+        addClass(scriptName, code, version);
+        return groovyClassCache.get(scriptName);
+    }
+
+    private void addClass(String scriptName, String code, String version) {
+        String currentKey = generateKey(scriptName, version);
+        if (groovyClassCache.get(currentKey) == null) {
+            GroovyClassLoader groovyClassLoader = new GroovyClassLoader();
+            Class clazz = groovyClassLoader.parseClass(code);
+            removeClass(generateKeyPrefix(scriptName));
+            groovyClassCache.put(scriptName, clazz);
+        }
+    }
+
+    private String generateKey(String scriptName, String version) {
+        return generateKeyPrefix(scriptName) + version;
+    }
+
+    private String generateKeyPrefix(String id) {
+        return "groovy-" + id + "-";
     }
 }

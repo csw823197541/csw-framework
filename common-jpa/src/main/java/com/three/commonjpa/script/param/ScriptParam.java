@@ -19,6 +19,8 @@ public class ScriptParam {
 
     private String code;
 
+    private String plainTxt;
+
     private String version;
 
     private String remark;

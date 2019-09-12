@@ -35,8 +35,6 @@ public class ScriptService extends BaseService<Script> {
         Script script = new Script();
         script = (Script) BeanCopyUtil.copyBean(param, script);
 
-        GroovyCommonUtil1.addClass(script.getName(), script.getCode());
-
         scriptRepository.save(script);
     }
 
@@ -47,11 +45,9 @@ public class ScriptService extends BaseService<Script> {
         Script script = getEntityById(scriptRepository, param.getId());
         script.setName(param.getName());
         script.setCode(param.getCode());
+        script.setPlainTxt(param.getPlainTxt());
         script.setVersion(param.getVersion());
         script.setRemark(param.getRemark());
-
-        GroovyCommonUtil1.removeClass(script.getName());
-        GroovyCommonUtil1.addClass(script.getName(), script.getCode());
 
         scriptRepository.save(script);
     }
@@ -65,7 +61,6 @@ public class ScriptService extends BaseService<Script> {
             script.setStatus(code);
             scriptList.add(script);
 
-            GroovyCommonUtil1.removeClass(script.getName());
         }
 
         scriptRepository.saveAll(scriptList);

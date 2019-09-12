@@ -38,6 +38,13 @@ public class Script implements Serializable {
     @Column(columnDefinition = "text")
     private String code;
 
+    /**
+     * 代码
+     */
+    @Lob
+    @Column(columnDefinition = "text")
+    private String plainTxt;
+
     private String version;
 
     private String remark;

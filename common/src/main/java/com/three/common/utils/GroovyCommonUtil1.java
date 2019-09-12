@@ -1,6 +1,7 @@
 package com.three.common.utils;
 
 import groovy.lang.GroovyClassLoader;
+import groovy.util.GroovyScriptEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +18,6 @@ public class GroovyCommonUtil1 {
 
     private static Map<String, Class> groovyClassCache = new ConcurrentHashMap<>();
 
-    private static GroovyClassLoader groovyClassLoader = new GroovyClassLoader();
 
     public static void removeClass(String scriptName) {
         groovyClassCache.remove(scriptName);
@@ -28,6 +28,7 @@ public class GroovyCommonUtil1 {
     }
 
     public static void addClass(String scriptName, String code) {
+        GroovyClassLoader groovyClassLoader = new GroovyClassLoader();
         Class clazz = groovyClassLoader.parseClass(code);
         groovyClassCache.put(scriptName, clazz);
     }
