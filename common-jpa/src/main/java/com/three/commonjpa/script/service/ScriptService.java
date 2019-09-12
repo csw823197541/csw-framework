@@ -1,8 +1,8 @@
 package com.three.commonjpa.script.service;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 import com.three.common.utils.BeanCopyUtil;
-import com.three.common.utils.GroovyCommonUtil1;
 import com.three.common.utils.StringUtil;
 import com.three.common.vo.PageQuery;
 import com.three.common.vo.PageResult;
@@ -12,9 +12,11 @@ import com.three.commonjpa.script.param.ScriptParam;
 import com.three.commonjpa.script.repository.ScriptRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -66,8 +68,17 @@ public class ScriptService extends BaseService<Script> {
         scriptRepository.saveAll(scriptList);
     }
 
-    public PageResult<Script> query(PageQuery pageQuery, int code, String searchKey, String searchValue) {
+    public PageResult<Script> query(PageQuery pageQuery, int code, String searchValue) {
         Sort sort = new Sort(Sort.Direction.ASC, "createDate");
-        return query(scriptRepository, pageQuery, sort, code, searchKey, searchValue);
+        Specification specification = (root, criteriaQuery, criteriaBuilder) -> {
+            List<Predicate> predicateList = Lists.newArrayList();
+            predicateList.add(criteriaBuilder.equal(root.get("status"), code));
+            if (StringUtil.isNotBlank(searchValue)) {
+                predicateList.add(criteriaBuilder.like(root.get("name"), "%" + searchValue + "%"));
+            }
+            Predicate[] predicates = new Predicate[predicateList.size()];
+            return criteriaBuilder.and(predicateList.toArray(predicates));
+        };
+        return query(scriptRepository, pageQuery, sort, specification);
     }
 }

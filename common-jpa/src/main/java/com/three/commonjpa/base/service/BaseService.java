@@ -61,6 +61,12 @@ public class BaseService<T> {
         return new PageResult<>(resultPage.getTotalElements(), resultPage.getContent());
     }
 
+    // 不分页，添加查询条件
+    public PageResult<T> query(BaseRepository baseRepository, Sort sort, Specification<T> specification) {
+        List<T> resultList = baseRepository.findAll(specification, sort);
+        return new PageResult<T>(resultList);
+    }
+
     protected Specification<T> getCodeAndSearchKeySpec(int code, String searchKey, String searchValue) {
         return (root, criteriaQuery, criteriaBuilder) -> {
             List<Predicate> predicateList = Lists.newArrayList();
