@@ -7,7 +7,7 @@ import lombok.Getter;
  * Description:
  */
 @Getter
-public enum ActionLogEnum {
+public enum LogEnum {
 
     INFO(1, "INFO"),
     ERROR(2, "ERROR"),
@@ -20,7 +20,7 @@ public enum ActionLogEnum {
 
     private String message;
 
-    ActionLogEnum(int code, String message) {
+    LogEnum(int code, String message) {
         this.code = code;
         this.message = message;
     }

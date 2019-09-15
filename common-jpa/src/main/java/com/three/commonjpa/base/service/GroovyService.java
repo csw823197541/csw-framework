@@ -53,11 +53,11 @@ public class GroovyService {
             try {
                 res = instance.invokeMethod(methodName, params);
             } catch (Exception e) {
-                log.warn("执行方法" + methodName + "出现异常", e);
+                log.error("执行方法" + methodName + "出现异常", e);
             }
 
         } catch (Exception e1) {
-            log.warn("加载脚本[" + scriptName + "]出现异常", e1);
+            log.error("加载脚本[" + scriptName + "]出现异常", e1);
         }
 
         return res;

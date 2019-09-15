@@ -14,7 +14,7 @@ public class TestService {
     @Autowired
     private GroovyService groovyService;
 
-    public Object test(String test, String helloWithoutParam) {
-        return groovyService.exec(test, helloWithoutParam);
+    public Object test(String name, String method) {
+        return groovyService.exec(name, method);
     }
 }

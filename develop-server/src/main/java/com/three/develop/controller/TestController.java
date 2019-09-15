@@ -15,9 +15,9 @@ public class TestController {
     @Autowired
     private TestService testService;
 
-    @GetMapping("/test")
-    public JsonResult test() {
-        String re = (String) testService.test("test", "helloWithoutParam");
+    @PostMapping("/test")
+    public JsonResult test(String name, String method) {
+        String re = (String) testService.test(name, method);
         return JsonResult.ok("执行成功：" + re);
     }
 }

@@ -2,14 +2,20 @@ package com.three.develop;
 
 import com.three.commonclient.EnableCommonClient;
 import com.three.commonjpa.EnableCommonJpa;
-//import com.three.resource_security.EnableResourceSecurity;
+import com.three.resource_security.EnableResourceSecurity;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
 @EnableCommonClient
 @EnableCommonJpa
-//@EnableResourceSecurity
+@EnableResourceSecurity
+@EnableAsync
+@EnableJpaRepositories("com.three.develop")
+@EntityScan("com.three.develop")
 public class DevelopServerApplication {
 
     public static void main(String[] args) {

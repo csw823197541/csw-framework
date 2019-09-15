@@ -1,10 +1,8 @@
 package com.three.log.service;
 
-import com.three.common.enums.ActionLogEnum;
+import com.three.common.enums.LogEnum;
 import com.three.common.log.Log;
-import com.three.common.utils.HttpServletUtil;
 import com.three.common.utils.StringUtil;
-import com.three.common.utils.UserAgentGetter;
 import com.three.common.vo.PageQuery;
 import com.three.common.vo.PageResult;
 import com.three.commonjpa.base.service.BaseService;
@@ -17,7 +15,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Set;
 
@@ -44,7 +41,7 @@ public class ActionLogService extends BaseService<ActionLog> {
             log.setUsername(LoginUserUtil.getLoginUsername());
         }
         actionLog.setUsername(log.getUsername());
-        actionLog.setLogType(log.getFlag() ? ActionLogEnum.INFO.getCode() : ActionLogEnum.ERROR.getCode());
+        actionLog.setLogType(log.getFlag() ? LogEnum.INFO.getCode() : LogEnum.ERROR.getCode());
         actionLog.setMessage(log.getMessage());
         actionLog.setTime(log.getTime());
         actionLog.setDescription(log.getModule());
