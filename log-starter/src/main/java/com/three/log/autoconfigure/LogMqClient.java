@@ -43,7 +43,7 @@ public class LogMqClient {
         CompletableFuture.runAsync(() -> {
             try {
                 amqpTemplate.convertAndSend(LogQueue.LOG_QUEUE, log);
-                logger.info("发送日志到队列：{}", log);
+                logger.info("通过LogMqClient，发送日志到队列：{}", log);
             } catch (Exception e2) {
                 e2.printStackTrace();
             }

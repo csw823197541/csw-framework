@@ -84,7 +84,7 @@ public class LogAop {
             CompletableFuture.runAsync(() -> {
                 try {
                     amqpTemplate.convertAndSend(LogQueue.LOG_QUEUE, log);
-                    logger.info("发送日志到队列：{}", log);
+                    logger.info("通过注解，发送日志到队列：{}", log);
                 } catch (Exception e2) {
                     e2.printStackTrace();
                 }
