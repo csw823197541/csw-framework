@@ -1,10 +1,7 @@
 package com.three.resource_security.myextends;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configurers.oauth2.client.OAuth2LoginConfigurer;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.stereotype.Service;
@@ -19,6 +16,8 @@ import java.util.*;
 @Service
 public class MySecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 
+    private static final String[] ENDPOINTS = {"/v2/api-docs", "/swagger-ui.html", "/swagger-resources", "/webjars"};
+
     /**
      * 返回本次访问需要的权限，可以有多个权限
      * 如果没有匹配的url直接返回null，也就是没有配置权限的url默认都为白名单，想要换成默认是黑名单只要修改这里即可。
@@ -32,9 +31,10 @@ public class MySecurityMetadataSource implements FilterInvocationSecurityMetadat
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
         // object 中包含用户请求的request 信息
         HttpServletRequest request = ((FilterInvocation) object).getHttpRequest();
-        String reUrl = request.getMethod().toLowerCase() + ":" + request.getRequestURI();
+        String uri = request.getRequestURI();
+        String reUrl = request.getMethod().toLowerCase() + ":" + uri;
 
-        if (request.getRequestURI().startsWith("/internal/")) { // 服务之间内部访问
+        if (uri.startsWith("/internal/") || permitAllUrl(uri)) { // 服务之间内部访问
             return null;
         }
 
@@ -43,6 +43,15 @@ public class MySecurityMetadataSource implements FilterInvocationSecurityMetadat
         ConfigAttribute configAttribute = new SecurityConfig(reUrl);
         configAttributeList.add(configAttribute);
         return configAttributeList;
+    }
+
+    private boolean permitAllUrl(String uri) {
+        for (String permitUrl : ENDPOINTS) {
+            if (uri.startsWith(permitUrl)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

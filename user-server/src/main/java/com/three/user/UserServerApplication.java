@@ -7,11 +7,13 @@ import com.three.resource_security.EnableResourceSecurity;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @EnableCommonClient
 @EnableCommonJpa
 @EnableResourceSecurity
+@EnableSwagger2
 @Import({ComponentScanConfig.class})
 public class UserServerApplication {
 

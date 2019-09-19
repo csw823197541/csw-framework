@@ -40,7 +40,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers(PermitAllUrl.permitAllUrl("/internal/**")).permitAll() // 放开权限的url
                 .anyRequest().authenticated();
-        http.httpBasic().disable().csrf().disable().cors().disable();
+        http.httpBasic().disable();
+        http.csrf().disable();
+        http.cors().disable();
         http.headers().frameOptions().disable();
         http.addFilterBefore(myFilterSecurityInterceptor, FilterSecurityInterceptor.class);
     }
