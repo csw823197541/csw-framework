@@ -27,7 +27,7 @@ public class QuartzJobController {
 
     @LogAnnotation(module = "添加定时任务")
     @ApiOperation(value = "添加定时任务")
-    @ApiImplicitParam(name = "quartzJobParam", value = "定时任务信息", required = true, dataType = "quartzJobParam")
+    @ApiImplicitParam(name = "quartzJobParam", value = "定时任务信息", required = true, dataType = "QuartzJobParam")
     @PostMapping()
     public JsonResult create(@RequestBody QuartzJobParam quartzJobParam) {
         quartzJobService.create(quartzJobParam);
@@ -36,7 +36,7 @@ public class QuartzJobController {
 
     @LogAnnotation(module = "修改定时任务")
     @ApiOperation(value = "修改定时任务")
-    @ApiImplicitParam(name = "quartzJobParam", value = "定时任务信息", required = true, dataType = "quartzJobParam")
+    @ApiImplicitParam(name = "quartzJobParam", value = "定时任务信息", required = true, dataType = "QuartzJobParam")
     @PutMapping()
     public JsonResult update(@RequestBody QuartzJobParam quartzJobParam) {
         quartzJobService.update(quartzJobParam);

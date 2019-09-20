@@ -16,6 +16,8 @@ import java.util.Set;
  */
 public class StringUtil {
 
+    private static final char SEPARATOR = '_';
+
     /**
      * 是否为空
      *
@@ -109,5 +111,144 @@ public class StringUtil {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * 驼峰命名法工具
+     *
+     * @return toCamelCase(" hello_world ") == "helloWorld"
+     * toCapitalizeCamelCase("hello_world") == "HelloWorld"
+     * toUnderScoreCase("helloWorld") = "hello_world"
+     */
+    public static String toCamelCase(String s) {
+        if (s == null) {
+            return null;
+        }
+
+        s = s.toLowerCase();
+
+        StringBuilder sb = new StringBuilder(s.length());
+        boolean upperCase = false;
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+
+            if (c == SEPARATOR) {
+                upperCase = true;
+            } else if (upperCase) {
+                sb.append(Character.toUpperCase(c));
+                upperCase = false;
+            } else {
+                sb.append(c);
+            }
+        }
+
+        return sb.toString();
+    }
+
+    /**
+     * 驼峰命名法工具
+     *
+     * @return toCamelCase(" hello_world ") == "helloWorld"
+     * toCapitalizeCamelCase("hello_world") == "HelloWorld"
+     * toUnderScoreCase("helloWorld") = "hello_world"
+     */
+    public static String toCapitalizeCamelCase(String s) {
+        if (s == null) {
+            return null;
+        }
+        s = toCamelCase(s);
+        return s.substring(0, 1).toUpperCase() + s.substring(1);
+    }
+
+    /**
+     * 驼峰命名法工具
+     *
+     * @return toCamelCase(" hello_world ") == "helloWorld"
+     * toCapitalizeCamelCase("hello_world") == "HelloWorld"
+     * toUnderScoreCase("helloWorld") = "hello_world"
+     */
+    public static String toUnderScoreCase(String s) {
+        if (s == null) {
+            return null;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        boolean upperCase = false;
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+
+            boolean nextUpperCase = true;
+
+            if (i < (s.length() - 1)) {
+                nextUpperCase = Character.isUpperCase(s.charAt(i + 1));
+            }
+
+            if ((i > 0) && Character.isUpperCase(c)) {
+                if (!upperCase || !nextUpperCase) {
+                    sb.append(SEPARATOR);
+                }
+                upperCase = true;
+            } else {
+                upperCase = false;
+            }
+
+            sb.append(Character.toLowerCase(c));
+        }
+
+        return sb.toString();
+    }
+
+    public static String removePrefix(CharSequence str, CharSequence prefix) {
+        if (!isEmpty(str) && !isEmpty(prefix)) {
+            String str2 = str.toString();
+            return str2.startsWith(prefix.toString()) ? subSuf(str2, prefix.length()) : str2;
+        } else {
+            return str(str);
+        }
+    }
+
+    public static boolean isEmpty(CharSequence str) {
+        return str == null || str.length() == 0;
+    }
+
+    public static String str(CharSequence cs) {
+        return null == cs ? null : cs.toString();
+    }
+
+    public static String subSuf(CharSequence string, int fromIndex) {
+        return isEmpty(string) ? null : sub(string, fromIndex, string.length());
+    }
+
+    public static String sub(CharSequence str, int fromIndex, int toIndex) {
+        if (isEmpty(str)) {
+            return str(str);
+        } else {
+            int len = str.length();
+            if (fromIndex < 0) {
+                fromIndex += len;
+                if (fromIndex < 0) {
+                    fromIndex = 0;
+                }
+            } else if (fromIndex > len) {
+                fromIndex = len;
+            }
+
+            if (toIndex < 0) {
+                toIndex += len;
+                if (toIndex < 0) {
+                    toIndex = len;
+                }
+            } else if (toIndex > len) {
+                toIndex = len;
+            }
+
+            if (toIndex < fromIndex) {
+                int tmp = fromIndex;
+                fromIndex = toIndex;
+                toIndex = tmp;
+            }
+
+            return fromIndex == toIndex ? "" : str.toString().substring(fromIndex, toIndex);
+        }
     }
 }
