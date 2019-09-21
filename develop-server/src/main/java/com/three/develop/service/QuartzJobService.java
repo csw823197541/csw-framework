@@ -4,7 +4,6 @@ import com.three.common.utils.BeanCopyUtil;
 import com.three.common.utils.StringUtil;
 import com.three.common.vo.PageQuery;
 import com.three.common.vo.PageResult;
-import com.three.commonclient.exception.BusinessException;
 import com.three.commonclient.exception.ParameterException;
 import com.three.commonclient.utils.BeanValidator;
 import com.three.commonjpa.base.service.BaseService;

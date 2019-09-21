@@ -37,27 +37,22 @@ public class GenUtil {
     /**
      * 生成代码
      *
-     * @param columnInfoList 表元数据
      * @param genConfig      生成代码的参数配置，如包路径，作者
+     * @param columnInfoList 表元数据
+     * @param templateList   代码模板
      */
-    public static void generateCode(List<ColumnInfo> columnInfoList, GenConfig genConfig, String tableName) throws IOException {
+    public static void generateCode(GenConfig genConfig, List<ColumnInfo> columnInfoList, List<String> templateList) throws IOException {
         Map<String, Object> map = new HashMap<>();
-        map.put("package", genConfig.getPack());
+        map.put("package", genConfig.getPackPath());
         map.put("moduleName", genConfig.getModuleName());
+        map.put("menuName", genConfig.getMenuName());
+        map.put("controllerUrl", genConfig.getControllerUrl());
         map.put("author", genConfig.getAuthor());
         map.put("date", LocalDate.now().toString());
-        map.put("tableName", tableName);
-        String className = StringUtil.toCapitalizeCamelCase(tableName);
-        String changeClassName = StringUtil.toCamelCase(tableName);
-
-        // 判断是否去除表前缀
-        if (StringUtil.isNotBlank(genConfig.getPrefix())) {
-            className = StringUtil.toCapitalizeCamelCase(StringUtil.removePrefix(tableName, genConfig.getPrefix()));
-            changeClassName = StringUtil.toCamelCase(StringUtil.removePrefix(tableName, genConfig.getPrefix()));
-        }
-        map.put("className", className);
-        map.put("upperCaseClassName", className.toUpperCase());
-        map.put("changeClassName", changeClassName);
+        map.put("tableName", genConfig.getTableName());
+        map.put("className", genConfig.getClassName());
+//        map.put("upperCaseClassName", genConfig.getClassName().toUpperCase());
+        map.put("changeClassName", StringUtil.toLowerCaseFirstOne(genConfig.getClassName()));
         map.put("hasTimestamp", false);
         map.put("hasBigDecimal", false);
         map.put("hasQuery", false);
@@ -69,24 +64,23 @@ public class GenUtil {
             Map<String, Object> listMap = new HashMap<>();
             listMap.put("columnComment", column.getColumnComment());
             listMap.put("columnKey", column.getColumnKey());
-            String colType = column.getColumnType();
-            String changeColumnName = StringUtil.toCamelCase(column.getColumnName());
+            String changeColumnName = StringUtil.toUnderScoreCase(column.getColumnName());
             String capitalColumnName = StringUtil.toCapitalizeCamelCase(column.getColumnName());
             if (PK.equals(column.getColumnKey())) {
-                map.put("pkColumnType", colType);
+                map.put("pkColumnType", column.getColumnType());
                 map.put("pkChangeColName", changeColumnName);
                 map.put("pkCapitalColName", capitalColumnName);
             }
-            if (TIMESTAMP.equals(colType)) {
+            if (TIMESTAMP.equals(column.getColumnType())) {
                 map.put("hasTimestamp", true);
             }
-            if (BIG_DECIMAL.equals(colType)) {
+            if (BIG_DECIMAL.equals(column.getColumnType())) {
                 map.put("hasBigDecimal", true);
             }
             if (EXTRA.equals(column.getExtra())) {
                 map.put("auto", true);
             }
-            listMap.put("columnType", colType);
+            listMap.put("columnType", column.getColumnType());
             listMap.put("columnName", column.getColumnName());
             listMap.put("isNullable", column.getIsNullable());
             listMap.put("columnShow", column.getColumnShow());
@@ -103,54 +97,23 @@ public class GenUtil {
         }
         map.put("columns", columns);
         map.put("queryColumns", queryColumns);
-        TemplateEngine engine = TemplateUtil.createEngine(new TemplateConfig("template", TemplateConfig.ResourceMode.CLASSPATH));
+
+        // 加载模板
+        TemplateEngine engine = TemplateUtil.createEngine(new TemplateConfig("template/generator/admin/", TemplateConfig.ResourceMode.CLASSPATH));
 
         // 生成后端代码
-        List<String> templates = getAdminTemplateNames();
-        for (String templateName : templates) {
-            Template template = engine.getTemplate("generator/admin/" + templateName + ".ftl");
-            String filePath = getAdminFilePath(templateName, genConfig, className);
+        for (String templateName : templateList) {
+            Template template = engine.getTemplate(templateName + ".ftl");
+            String filePath = getAdminFilePath(templateName, genConfig, genConfig.getClassName());
 
             File file = null;
             if (filePath != null) {
                 file = new File(filePath);
             }
 
-            // 如果非覆盖生成
-            if (!genConfig.getCover() && FileUtil.exist(file)) {
-                continue;
-            }
             // 生成代码
             genFile(file, template, map);
         }
-    }
-
-    /**
-     * 获取后端代码模板名称
-     *
-     * @return
-     */
-    private static List<String> getAdminTemplateNames() {
-        List<String> templateNames = new ArrayList<>();
-        templateNames.add("Entity");
-//        templateNames.add("Repository");
-//        templateNames.add("Service");
-//        templateNames.add("QueryCriteria");
-//        templateNames.add("Controller");
-        return templateNames;
-    }
-
-    /**
-     * 获取前端代码模板名称
-     *
-     * @return
-     */
-    private static List<String> getFrontTemplateNames() {
-        List<String> templateNames = new ArrayList<>();
-        templateNames.add("api");
-        templateNames.add("index");
-        templateNames.add("eForm");
-        return templateNames;
     }
 
     /**
@@ -158,63 +121,29 @@ public class GenUtil {
      */
     private static String getAdminFilePath(String templateName, GenConfig genConfig, String className) {
         String projectPath = System.getProperty("user.dir") + File.separator + genConfig.getModuleName();
+        if (StringUtil.isNotBlank(genConfig.getAdminPath()) && FileUtil.exist(genConfig.getAdminPath())) {
+            projectPath = genConfig.getAdminPath() + File.separator + genConfig.getModuleName();
+        }
         String packagePath = projectPath + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator;
-        if (!ObjectUtils.isEmpty(genConfig.getPack())) {
-            packagePath += genConfig.getPack().replace(".", File.separator) + File.separator;
+        if (!ObjectUtils.isEmpty(genConfig.getPackPath())) {
+            packagePath += genConfig.getPackPath().replace(".", File.separator) + File.separator;
         }
-
         if ("Entity".equals(templateName)) {
-            return packagePath + "domain" + File.separator + className + ".java";
+            return packagePath + "entity" + File.separator + className + ".java";
         }
-
         if ("Controller".equals(templateName)) {
-            return packagePath + "rest" + File.separator + className + "Controller.java";
+            return packagePath + "controller" + File.separator + className + "Controller.java";
         }
-
         if ("Service".equals(templateName)) {
             return packagePath + "service" + File.separator + className + "Service.java";
         }
-
-        if ("ServiceImpl".equals(templateName)) {
-            return packagePath + "service" + File.separator + "impl" + File.separator + className + "ServiceImpl.java";
+        if ("Param".equals(templateName)) {
+            return packagePath + "param" + File.separator + className + "Param.java";
         }
-
-        if ("Dto".equals(templateName)) {
-            return packagePath + "service" + File.separator + "dto" + File.separator + className + "DTO.java";
-        }
-
-        if ("QueryCriteria".equals(templateName)) {
-            return packagePath + "service" + File.separator + "dto" + File.separator + className + "QueryCriteria.java";
-        }
-
-        if ("Mapper".equals(templateName)) {
-            return packagePath + "service" + File.separator + "mapper" + File.separator + className + "Mapper.java";
-        }
-
         if ("Repository".equals(templateName)) {
             return packagePath + "repository" + File.separator + className + "Repository.java";
         }
 
-        return null;
-    }
-
-    /**
-     * 定义前端文件路径以及名称
-     */
-    private static String getFrontFilePath(String templateName, GenConfig genConfig, String apiName) {
-        String path = genConfig.getPath();
-
-        if ("api".equals(templateName)) {
-            return genConfig.getApiPath() + File.separator + apiName + ".js";
-        }
-
-        if ("index".equals(templateName)) {
-            return path + File.separator + "index.vue";
-        }
-
-        if ("eForm".equals(templateName)) {
-            return path + File.separator + File.separator + "form.vue";
-        }
         return null;
     }
 

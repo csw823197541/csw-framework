@@ -14,26 +14,9 @@ import javax.validation.constraints.NotBlank;
 public class GenConfig {
 
     /**
-     * 包路径
-     **/
-    @NotBlank
-    private String pack;
-
-    /**
-     * 模块名
-     **/
-    private String moduleName;
-
-    /**
      * 后端代码文件路径
      **/
-    @NotBlank
-    private String path;
-
-    /**
-     * 前端代码文件路径
-     **/
-    private String apiPath;
+    private String adminPath;
 
     /**
      * 作者
@@ -41,12 +24,39 @@ public class GenConfig {
     private String author;
 
     /**
-     * 表前缀
+     * 包路径
      **/
-    private String prefix;
+    @NotBlank
+    private String packPath;
+
+    /**
+     * 模块名/父级菜单
+     **/
+    private String moduleName;
+
+    /**
+     * 菜单名称
+     **/
+    private String menuName;
+
+    /**
+     * 接口路径
+     */
+    private String controllerUrl;
+
+    /**
+     * 实体类名
+     */
+    private String className;
+
+    /**
+     * 表名称
+     */
+    private String tableName;
 
     /**
      * 是否覆盖
      **/
+    @Builder.Default
     private Boolean cover = Boolean.TRUE;
 }

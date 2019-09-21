@@ -6,40 +6,44 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 <#if hasTimestamp>
-import java.sql.Timestamp;
+    import java.sql.Timestamp;
 </#if>
 <#if hasBigDecimal>
-import java.math.BigDecimal;
+    import java.math.BigDecimal;
 </#if>
 
 /**
-* @author ${author}
-* @date ${date}
-*/
+ * Created by ${author} on ${date}.
+ * Description:
+ */
+
 @Getter
 @Setter
 @Entity
-@Table(name="${tableName}")
+@Table(name = "${tableName}")
 @EntityListeners(AuditingEntityListener.class)
 public class ${className} implements Serializable {
 <#if columns??>
-    <#list columns as column>
 
-    <#if column.columnComment != ''>
-    // ${column.columnComment}
-    </#if>
-    <#if column.columnKey = 'PRI'>
     @Id
-    <#if auto>
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    </#if>
-    </#if>
-    @Column(<#if column.columnKey = 'UNI'>unique = true</#if><#if column.isNullable = 'NO' && column.columnKey != 'PRI'>, nullable = false</#if>)
-    private ${column.columnType} ${column.changeColumnName};
+    private Long id;
+
+
+    <#list columns as column>
+        <#if column.columnKey = 'text'>
+    @Lob
+        </#if>
+        <#if column.columnKey = 'UNI' || column.isNullable == false>
+    @Column(name = "${column.changeColumnName}"<#if column.columnKey = 'UNI'>, unique = true</#if><#if column.isNullable == false>, nullable = false</#if><#if column.columnKey = 'text'>, columnDefinition = "text"</#if>)
+        </#if>
+    private ${column.columnType} ${column.columnName};<#if column.columnComment != ''> // ${column.columnComment}</#if>
+
     </#list>
 
     private String remark; // 描述/备注

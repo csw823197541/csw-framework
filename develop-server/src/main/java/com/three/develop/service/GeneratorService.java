@@ -15,11 +15,12 @@ import java.util.List;
 @Service
 public class GeneratorService {
 
-    public void generate(List<ColumnInfo> columnInfoList, GenConfig genConfig, String tableName) {
+    public void generate(GenConfig genConfig, List<ColumnInfo> columnInfoList, List<String> templateList) {
         try {
-            GenUtil.generateCode(columnInfoList, genConfig, tableName);
+            GenUtil.generateCode(genConfig, columnInfoList, templateList);
         } catch (Exception e) {
-            throw new BusinessException("代码生成过程中发生异常");
+            e.printStackTrace();
+            throw new BusinessException("代码生成过程中发生异常：" + e.getMessage());
         }
     }
 }

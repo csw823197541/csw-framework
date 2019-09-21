@@ -117,8 +117,6 @@ public class StringUtil {
      * 驼峰命名法工具
      *
      * @return toCamelCase(" hello_world ") == "helloWorld"
-     * toCapitalizeCamelCase("hello_world") == "HelloWorld"
-     * toUnderScoreCase("helloWorld") = "hello_world"
      */
     public static String toCamelCase(String s) {
         if (s == null) {
@@ -148,9 +146,7 @@ public class StringUtil {
     /**
      * 驼峰命名法工具
      *
-     * @return toCamelCase(" hello_world ") == "helloWorld"
-     * toCapitalizeCamelCase("hello_world") == "HelloWorld"
-     * toUnderScoreCase("helloWorld") = "hello_world"
+     * @return toCapitalizeCamelCase(" hello_world ") == "HelloWorld"
      */
     public static String toCapitalizeCamelCase(String s) {
         if (s == null) {
@@ -163,9 +159,7 @@ public class StringUtil {
     /**
      * 驼峰命名法工具
      *
-     * @return toCamelCase(" hello_world ") == "helloWorld"
-     * toCapitalizeCamelCase("hello_world") == "HelloWorld"
-     * toUnderScoreCase("helloWorld") = "hello_world"
+     * @return toUnderScoreCase(" helloWorld ") = "hello_world"
      */
     public static String toUnderScoreCase(String s) {
         if (s == null) {
@@ -196,6 +190,17 @@ public class StringUtil {
         }
 
         return sb.toString();
+    }
+
+    /**
+     * 首字母转小写
+     */
+    public static String toLowerCaseFirstOne(String s) {
+        if (Character.isLowerCase(s.charAt(0))) {
+            return s;
+        } else {
+            return Character.toLowerCase(s.charAt(0)) + s.substring(1);
+        }
     }
 
     public static String removePrefix(CharSequence str, CharSequence prefix) {

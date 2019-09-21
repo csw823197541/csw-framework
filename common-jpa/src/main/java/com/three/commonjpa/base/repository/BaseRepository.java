@@ -34,7 +34,7 @@ public interface BaseRepository<T, ID> extends JpaRepository<T, ID>, JpaSpecific
 
     /**
      * 批量更新数据状态
-     * #{#entityName} 实体类对象
+     * #{#className} 实体类对象
      *
      * @param status 状态
      * @param id     ID列表

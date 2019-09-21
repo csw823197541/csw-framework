@@ -20,7 +20,12 @@ public class ColumnInfo {
     private String columnName;
 
     /**
-     * 数据库字段类型
+     * 字段标题/数据库字段注释
+     **/
+    private String columnComment;
+
+    /**
+     * 数据类型/数据库字段类型
      **/
     @NotBlank
     private String columnType;
@@ -28,17 +33,12 @@ public class ColumnInfo {
     /**
      * 允许空值
      **/
-    private String isNullable;
+    private Boolean isNullable;
 
     /**
      * 数据库字段键类型
      **/
     private String columnKey;
-
-    /**
-     * 数据库字段注释
-     **/
-    private String columnComment;
 
     /**
      * 额外的参数
@@ -50,6 +50,11 @@ public class ColumnInfo {
      * 查询 1:模糊 2：精确
      **/
     private String columnQuery;
+
+    /**
+     * 字段验证（可选）
+     */
+    private String columnVerify;
 
     /**
      * 是否在列表显示

@@ -62,7 +62,6 @@ public class ScriptService extends BaseService<Script> {
             Script script = getEntityById(scriptRepository, id);
             script.setStatus(code);
             scriptList.add(script);
-
         }
 
         scriptRepository.saveAll(scriptList);
