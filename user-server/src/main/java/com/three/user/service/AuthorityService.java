@@ -24,7 +24,7 @@ import java.util.Set;
  * Description:
  */
 @Service
-public class AuthorityService extends BaseService<Authority> {
+public class AuthorityService extends BaseService<Authority, Long> {
 
     @Autowired
     private AuthorityRepository authorityRepository;

@@ -77,8 +77,7 @@ public class StringUtil {
      */
     public static String upperHeadChar(String in) {
         String head = in.substring(0, 1);
-        String out = head.toUpperCase() + in.substring(1, in.length());
-        return out;
+        return head.toUpperCase() + in.substring(1, in.length());
     }
 
     public static String getStr(String str) {
@@ -96,6 +95,23 @@ public class StringUtil {
             for (String id : ids) {
                 if (isNotBlank(id)) {
                     idSet.add(Long.valueOf(id));
+                }
+            }
+        }
+        return idSet;
+    }
+
+    public static Set<String> getStrToIdSet1(String ids) {
+        String[] idArray = StringUtils.split(ids, ",");
+        return getStringArrayToIdSet1(idArray);
+    }
+
+    public static Set<String> getStringArrayToIdSet1(String[] ids) {
+        Set<String> idSet = new HashSet<>();
+        if (ids != null) {
+            for (String id : ids) {
+                if (isNotBlank(id)) {
+                    idSet.add(id);
                 }
             }
         }

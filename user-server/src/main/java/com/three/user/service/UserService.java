@@ -37,7 +37,7 @@ import java.util.*;
  * Description:
  */
 @Service
-public class UserService extends BaseService<User> {
+public class UserService extends BaseService<User, Long> {
 
     @Autowired
     private UserRepository userRepository;

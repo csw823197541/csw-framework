@@ -13,14 +13,16 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class ${className}Param {
 
-    private Long id;
+    private ${pkColumnType} id;
 
 <#if columns??>
     <#list columns as column>
-        <#if column.isNullable == false>
+        <#if column.columnName != 'id'>
+            <#if column.isNullable == false>
     @NotBlank(message = "${column.columnComment}不可以为空")
-        </#if>
+            </#if>
     private ${column.columnType} ${column.columnName};<#if column.columnComment != ''> // ${column.columnComment}</#if>
+        </#if>
 
     </#list>
 </#if>

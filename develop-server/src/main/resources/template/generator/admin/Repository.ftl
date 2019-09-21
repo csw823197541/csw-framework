@@ -7,6 +7,6 @@ import com.three.commonjpa.base.repository.BaseRepository;
  * Created by ${author} on ${date}.
  * Description:
  */
-public interface ${className}Repository extends BaseRepository<${className}, Long> {
+public interface ${className}Repository extends BaseRepository<${className}, ${pkColumnType}> {
 
 }

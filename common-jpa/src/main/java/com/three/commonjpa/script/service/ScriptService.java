@@ -26,7 +26,7 @@ import java.util.Set;
  * Description:
  */
 @Service
-public class ScriptService extends BaseService<Script> {
+public class ScriptService extends BaseService<Script, Long> {
 
     @Autowired
     private ScriptRepository scriptRepository;

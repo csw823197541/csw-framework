@@ -19,7 +19,7 @@ import java.util.List;
  * Created by csw on 2019/03/29.
  * Description:
  */
-public class BaseService<T> {
+public class BaseService<T, ID> {
 
     // 分页，按code、关键字
     public PageResult<T> query(BaseRepository baseRepository, PageQuery pageQuery, Sort sort, int code, String searchKey, String searchValue) {
@@ -79,10 +79,10 @@ public class BaseService<T> {
         };
     }
 
-    protected T getEntityById(BaseRepository baseRepository, Long id) {
+    protected T getEntityById(BaseRepository baseRepository, ID id) {
         Preconditions.checkNotNull(id, "查找记录，id不可以为：" + id);
         T entity = (T) baseRepository.findById(id).orElse(null);
-        Preconditions.checkNotNull(entity, "查找记录（id：" + id + ")不存在");
+        Preconditions.checkNotNull(entity, "记录（id：" + id + ")不存在");
         return entity;
     }
 }

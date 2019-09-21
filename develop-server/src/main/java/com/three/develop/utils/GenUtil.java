@@ -32,7 +32,7 @@ public class GenUtil {
 
     private static final String PK = "PRI";
 
-    private static final String EXTRA = "auto_increment";
+    private static final String STRING = "String";
 
     /**
      * 生成代码
@@ -51,12 +51,11 @@ public class GenUtil {
         map.put("date", LocalDate.now().toString());
         map.put("tableName", genConfig.getTableName());
         map.put("className", genConfig.getClassName());
-//        map.put("upperCaseClassName", genConfig.getClassName().toUpperCase());
         map.put("changeClassName", StringUtil.toLowerCaseFirstOne(genConfig.getClassName()));
         map.put("hasTimestamp", false);
         map.put("hasBigDecimal", false);
         map.put("hasQuery", false);
-        map.put("auto", false);
+        map.put("strategy", "IDENTITY");
 
         List<Map<String, Object>> columns = new ArrayList<>();
         List<Map<String, Object>> queryColumns = new ArrayList<>();
@@ -65,11 +64,11 @@ public class GenUtil {
             listMap.put("columnComment", column.getColumnComment());
             listMap.put("columnKey", column.getColumnKey());
             String changeColumnName = StringUtil.toUnderScoreCase(column.getColumnName());
-            String capitalColumnName = StringUtil.toCapitalizeCamelCase(column.getColumnName());
             if (PK.equals(column.getColumnKey())) {
                 map.put("pkColumnType", column.getColumnType());
-                map.put("pkChangeColName", changeColumnName);
-                map.put("pkCapitalColName", capitalColumnName);
+                if (STRING.equals(column.getColumnType())) {
+                    map.put("strategy", "GUID");
+                }
             }
             if (TIMESTAMP.equals(column.getColumnType())) {
                 map.put("hasTimestamp", true);
@@ -77,15 +76,11 @@ public class GenUtil {
             if (BIG_DECIMAL.equals(column.getColumnType())) {
                 map.put("hasBigDecimal", true);
             }
-            if (EXTRA.equals(column.getExtra())) {
-                map.put("auto", true);
-            }
             listMap.put("columnType", column.getColumnType());
             listMap.put("columnName", column.getColumnName());
             listMap.put("isNullable", column.getIsNullable());
             listMap.put("columnShow", column.getColumnShow());
             listMap.put("changeColumnName", changeColumnName);
-            listMap.put("capitalColumnName", capitalColumnName);
 
             // 判断是否有查询，如有则把查询的字段set进columnQuery
             if (!StringUtil.isBlank(column.getColumnQuery())) {

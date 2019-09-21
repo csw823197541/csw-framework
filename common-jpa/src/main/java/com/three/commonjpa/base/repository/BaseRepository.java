@@ -22,7 +22,7 @@ public interface BaseRepository<T, ID> extends JpaRepository<T, ID>, JpaSpecific
      * @param id     主键ID
      * @param status 状态
      */
-    public T findByIdAndStatus(Long id, Integer status);
+    public T findByIdAndStatus(ID id, Integer status);
 
     /**
      * 查找ID且多个状态
@@ -30,20 +30,7 @@ public interface BaseRepository<T, ID> extends JpaRepository<T, ID>, JpaSpecific
      * @param id     主键ID
      * @param status 状态数组
      */
-    public T findByIdAndStatusIn(Long id, Integer[] status);
-
-    /**
-     * 批量更新数据状态
-     * #{#className} 实体类对象
-     *
-     * @param status 状态
-     * @param id     ID列表
-     * @return 更新数量
-     */
-    @Modifying
-    @Transactional
-    @Query("update #{#entityName} set status = ?1  where id in ?2  and status <> 3")
-    public Integer updateStatus(Integer status, List<Long> id);
+    public T findByIdAndStatusIn(ID id, Integer[] status);
 
     List<T> findAllByStatus(Integer code);
 }

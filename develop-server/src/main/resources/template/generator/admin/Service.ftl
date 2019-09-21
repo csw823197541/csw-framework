@@ -25,7 +25,7 @@ import java.util.Set;
  */
 
 @Service
-public class ${className}Service extends BaseService<${className}> {
+public class ${className}Service extends BaseService<${className},  ${pkColumnType}> {
 
     @Autowired
     private ${className}Repository ${changeClassName}Repository;
@@ -52,10 +52,10 @@ public class ${className}Service extends BaseService<${className}> {
 
     @Transactional
     public void delete(String ids, int code) {
-        Set<Long> idSet = StringUtil.getStrToIdSet(ids);
+        Set<String> idSet = StringUtil.getStrToIdSet1(ids);
         List<${className}> ${changeClassName}List = new ArrayList<>();
-        for (Long id : idSet) {
-            ${className} ${changeClassName} = getEntityById(${changeClassName}Repository, id);
+        for (String id : idSet) {
+            ${className} ${changeClassName} = getEntityById(${changeClassName}Repository, ${pkColumnType}.valueOf(id));
             ${changeClassName}.setStatus(code);
             ${changeClassName}List.add(${changeClassName});
         }

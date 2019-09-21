@@ -28,7 +28,7 @@ import java.util.*;
  * Description:
  */
 @Service
-public class RoleService extends BaseService<Role> {
+public class RoleService extends BaseService<Role, Long> {
 
     @Autowired
     private RoleRepository roleRepository;

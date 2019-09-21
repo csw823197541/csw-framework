@@ -27,6 +27,6 @@ public class GeneratorController {
     @PostMapping("/generate")
     public JsonResult create(@RequestBody GeneratorParam generatorParam) {
         generatorService.generate(generatorParam.getGenConfig(), generatorParam.getColumnInfoList(), generatorParam.getTemplateList());
-        return JsonResult.ok("生成成功");
+        return JsonResult.ok("代码生成成功");
     }
 }

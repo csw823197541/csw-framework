@@ -23,7 +23,7 @@ import java.util.Set;
  * Description:
  */
 @Service
-public class ActionLogService extends BaseService<ActionLog> {
+public class ActionLogService extends BaseService<ActionLog, Long> {
 
     @Autowired
     private ActionLogRepository actionLogRepository;

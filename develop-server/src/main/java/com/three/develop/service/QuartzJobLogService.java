@@ -20,7 +20,7 @@ import java.util.Set;
  * Description:
  */
 @Service
-public class QuartzJobLogService extends BaseService<QuartzJobLog> {
+public class QuartzJobLogService extends BaseService<QuartzJobLog, Long> {
 
     @Autowired
     private QuartzJobLogRepository quartzJobLogRepository;

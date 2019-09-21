@@ -8,13 +8,14 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 import java.io.Serializable;
 import java.util.Date;
 <#if hasTimestamp>
-    import java.sql.Timestamp;
+import java.sql.Timestamp;
 </#if>
 <#if hasBigDecimal>
-    import java.math.BigDecimal;
+import java.math.BigDecimal;
 </#if>
 
 /**
@@ -30,21 +31,32 @@ import java.util.Date;
 public class ${className} implements Serializable {
 <#if columns??>
 
+    <#if strategy = 'IDENTITY'>
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    </#if>
+    <#if strategy = 'GUID'>
+    @Id
+    @GeneratedValue(generator = "system-guid")
+    @GenericGenerator(name = "system-guid", strategy = "guid")
+    private String id;
+    </#if>
 
 
     <#list columns as column>
-        <#if column.columnKey = 'text'>
+        <#if column.columnName != 'id'>
+            <#if column.columnKey = 'text'>
     @Lob
-        </#if>
-        <#if column.columnKey = 'UNI' || column.isNullable == false>
+            </#if>
+            <#if column.columnKey = 'UNI' || column.isNullable == false>
     @Column(name = "${column.changeColumnName}"<#if column.columnKey = 'UNI'>, unique = true</#if><#if column.isNullable == false>, nullable = false</#if><#if column.columnKey = 'text'>, columnDefinition = "text"</#if>)
-        </#if>
+            </#if>
     private ${column.columnType} ${column.columnName};<#if column.columnComment != ''> // ${column.columnComment}</#if>
 
+        </#if>
     </#list>
+
 
     private String remark; // 描述/备注
 
